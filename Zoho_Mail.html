@@ -11,6 +11,8 @@
   --bg:#0d1117;--surface:#161b22;--card:#1c2330;--border:#30363d;
   --blue:#1a6abf;--navy:#0a1628;--green:#2ea043;--amber:#d29922;--red:#da3633;
   --text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--orange:#e8793a;
+  --purple:#9b59b6;--purple-light:#c39bd3;
+  --teal:#0e9aa7;--teal-light:#64d8e4;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
@@ -20,13 +22,17 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .brand-name{font-size:14px;font-weight:700;}
 .brand-sub{font-size:10px;color:var(--muted);}
 .topbar-badge{background:rgba(26,106,191,0.15);border:1px solid rgba(26,106,191,0.4);color:var(--accent);font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;}
-.main-tab-bar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 20px;gap:4px;}
-.main-tab{padding:11px 18px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:6px;}
+.main-tab-bar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 20px;gap:2px;overflow-x:auto;}
+.main-tab{padding:11px 16px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
 .main-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.main-tab.active.tab-obs{color:var(--purple-light);border-bottom-color:var(--purple);}
+.main-tab.active.tab-dev{color:var(--teal-light);border-bottom-color:var(--teal);}
 .main-tab:hover:not(.active){color:var(--text);}
 .mtbadge{font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;background:rgba(88,166,255,0.15);color:var(--accent);}
 .main-tab:nth-child(2) .mtbadge{background:rgba(232,121,58,0.15);color:var(--orange);}
-.layout{display:grid;grid-template-columns:395px 1fr;min-height:calc(100vh - 107px);}
+.main-tab:nth-child(3) .mtbadge{background:rgba(14,154,167,0.2);color:var(--teal-light);}
+.main-tab:nth-child(4) .mtbadge{background:rgba(155,89,182,0.2);color:var(--purple-light);}
+.layout{display:grid;grid-template-columns:410px 1fr;min-height:calc(100vh - 107px);}
 .left{background:var(--surface);border-right:1px solid var(--border);padding:20px 18px;overflow-y:auto;}
 .section-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;margin-top:18px;}
 .section-label:first-child{margin-top:0;}
@@ -42,6 +48,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .cfl.blue{background:rgba(88,166,255,0.12);color:var(--accent);}
 .cfl.orange{background:rgba(232,121,58,0.12);color:var(--orange);}
 .cfl.green{background:rgba(46,160,67,0.12);color:#6bcb77;}
+.cfl.purple{background:rgba(155,89,182,0.15);color:var(--purple-light);}
+.cfl.teal{background:rgba(14,154,167,0.15);color:var(--teal-light);}
 .ctbl{width:100%;border-collapse:collapse;}
 .ctbl th{font-size:8.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;padding:5px 8px;text-align:left;border-bottom:1px solid var(--border);}
 .ctbl td{font-size:10px;padding:5px 8px;border-bottom:1px solid rgba(48,54,61,0.5);vertical-align:top;line-height:1.5;}
@@ -73,6 +81,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .s-open .stat-num{color:#ff6b6b;}.s-dev .stat-num{color:#ffd166;}.s-obs .stat-num{color:#74b9ff;}
 .s-fix .stat-num{color:#6bcb77;}.s-tot .stat-num{color:var(--accent);}.s-crit .stat-num{color:#ff6b6b;}
 .s-over .stat-num{color:#ffd166;}.s-zero .stat-num{color:var(--orange);}.s-days .stat-num{color:#ff6b6b;}
+.s-purple .stat-num{color:var(--purple-light);}.s-teal .stat-num{color:var(--teal-light);}
 .proj-list{margin-bottom:12px;}
 .proj-item{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:7px 10px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;}
 .proj-name{font-size:11px;font-weight:600;}
@@ -83,10 +92,18 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .badge.obs{background:rgba(45,135,232,.15);color:#74b9ff;}
 .badge.fix{background:rgba(46,160,67,.15);color:#6bcb77;}
 .badge.days{background:rgba(232,121,58,.15);color:var(--orange);}
+.badge.purple{background:rgba(155,89,182,.2);color:var(--purple-light);}
+.badge.teal{background:rgba(14,154,167,.2);color:var(--teal-light);}
 .gen-btn{width:100%;background:linear-gradient(135deg,var(--blue),#0f4a8a);color:#fff;border:none;border-radius:9px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s,transform .1s;margin-bottom:8px;}
 .gen-btn:hover{opacity:.9;transform:translateY(-1px);}
 .gen-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
 .gen-btn.orange{background:linear-gradient(135deg,var(--orange),#b85a20);}
+.gen-btn.purple{background:linear-gradient(135deg,#9b59b6,#6c3483);}
+.gen-btn.teal{background:linear-gradient(135deg,#0e9aa7,#076870);}
+.signature-option{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.signature-checkbox{width:16px;height:16px;cursor:pointer;accent-color:var(--blue);}
+.signature-label{font-size:11px;color:var(--text);cursor:pointer;}
+.signature-label small{color:var(--muted);font-size:9px;margin-left:5px;}
 .share-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px;}
 .share-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 10px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:5px;}
 .share-btn:disabled{opacity:.3;cursor:not-allowed;}
@@ -103,7 +120,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .outlook-tip-text{font-size:10px;color:var(--muted);line-height:1.5;}
 .right{background:#e8edf2;overflow-y:auto;padding:26px 22px;display:flex;flex-direction:column;align-items:center;}
 .preview-label{font-size:10px;font-weight:700;color:#666;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;align-self:flex-start;}
-.email-shell{width:100%;max-width:820px;background:#fff;border-radius:4px;box-shadow:0 4px 32px rgba(0,0,0,.18);overflow:hidden;}
+.email-shell{width:100%;max-width:900px;background:#fff;border-radius:4px;box-shadow:0 4px 32px rgba(0,0,0,.18);overflow:hidden;}
 .empty-state{width:100%;max-width:820px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 40px;text-align:center;}
 .empty-icon{font-size:50px;margin-bottom:14px;opacity:.3;}
 .empty-title{font-size:16px;font-weight:700;color:#555;margin-bottom:6px;}
@@ -126,98 +143,75 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
       <div class="brand-sub">Craftsman Automation Limited</div>
     </div>
   </div>
-  <div class="topbar-badge">v8 · INTERNAL TOOL</div>
+  <div class="topbar-badge">v11 · INTERNAL TOOL</div>
 </div>
 
 <div class="main-tab-bar">
   <button class="main-tab active" id="mt1" onclick="switchMainTab('ticket',this)">🎫 Ticket Reminder <span class="mtbadge">2 files</span></button>
   <button class="main-tab" id="mt2" onclick="switchMainTab('zero',this)">📴 Zero Support Calls <span class="mtbadge">1 file</span></button>
+  <button class="main-tab tab-dev" id="mt3" onclick="switchMainTab('dev',this)">🛠 Under Development <span class="mtbadge">1 file</span></button>
+  <button class="main-tab tab-obs" id="mt4" onclick="switchMainTab('obs',this)">🔵 Under Observation <span class="mtbadge">1 file</span></button>
 </div>
 
 <div class="layout">
 
-<!-- ═══════════════════════ TAB 1 LEFT ═══════════════════════ -->
+<!-- ═══════════════════════ TAB 1 — TICKET REMINDER ═══════════════════════ -->
 <div class="left" id="left-ticket">
-
   <div class="section-label">Column Fields Reference</div>
   <div class="col-ref">
     <div class="col-ref-hdr" onclick="toggleRef('r1')">
-      <div class="col-ref-ttl">📋 All Column Names — Ticket Reminder <span style="font-size:9px;color:var(--muted);font-weight:400;">(2 files · 19 columns)</span></div>
+      <div class="col-ref-ttl">📋 Ticket Reminder <span style="font-size:9px;color:var(--muted);font-weight:400;">(2 files · 19 columns)</span></div>
       <span class="col-ref-arrow" id="r1-arr">▶</span>
     </div>
     <div class="col-ref-body" id="r1-body">
       <div class="col-file-sec">
         <span class="cfl blue">📊 File 1 — Summary Report (7 columns)</span>
         <table class="ctbl">
-          <thead><tr><th>Column Name</th><th>Description</th><th>Sample Value</th><th></th></tr></thead>
+          <thead><tr><th>Column Name</th><th>Description</th><th>Sample</th><th></th></tr></thead>
           <tbody>
-            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Client / project name. Each row = one project.</td><td class="csamp">TVS</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Open Tickets</span></td><td class="cdesc">Tickets in Open status — not yet picked up.</td><td class="csamp">6</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Under Development Tickets</span></td><td class="cdesc">Tickets actively being worked on by dev team.</td><td class="csamp">2</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Under Observation Tickets</span></td><td class="cdesc">Tickets under client / QA observation after fix.</td><td class="csamp">1</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Development Fixed Tickets</span></td><td class="cdesc">Fixed by dev but not yet closed by client.</td><td class="csamp">3</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Total Tickets</span></td><td class="cdesc">Sum of all tickets. Auto-calculated if blank.</td><td class="csamp">12</td><td><span class="creq o">Optional</span></td></tr>
-            <tr><td><span class="cfn">Last Created Time</span></td><td class="cdesc">Date &amp; time of last ticket. Auto-converts Excel serial numbers.</td><td class="csamp">23-02-2026 09:54</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Client / project name.</td><td class="csamp">TVS</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Open Tickets</span></td><td class="cdesc">Tickets in Open status.</td><td class="csamp">6</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Under Development Tickets</span></td><td class="cdesc">Actively in dev.</td><td class="csamp">2</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Under Observation Tickets</span></td><td class="cdesc">Under client/QA observation.</td><td class="csamp">1</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Development Fixed Tickets</span></td><td class="cdesc">Fixed, not yet closed.</td><td class="csamp">3</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Total Tickets</span></td><td class="cdesc">Auto-calc if blank.</td><td class="csamp">12</td><td><span class="creq o">Opt</span></td></tr>
+            <tr><td><span class="cfn">Last Created Time</span></td><td class="cdesc">Auto-converts Excel serials.</td><td class="csamp">23-02-2026 09:54</td><td><span class="creq o">Opt</span></td></tr>
           </tbody>
         </table>
       </div>
       <div class="cdivider"></div>
       <div class="col-file-sec">
-        <span class="cfl orange">🔍 File 2 — Detailed Ticket Report (12 columns)</span>
+        <span class="cfl orange">🔍 File 2 — Detailed Report (12 columns)</span>
         <table class="ctbl">
-          <thead><tr><th>Column Name</th><th>Description</th><th>Sample Value</th><th></th></tr></thead>
+          <thead><tr><th>Column Name</th><th>Description</th><th>Sample</th><th></th></tr></thead>
           <tbody>
-            <tr><td><span class="cfn">Ticket ID</span></td><td class="cdesc">Unique Zoho ticket number.</td><td class="csamp">1116</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Which project/client this ticket belongs to.</td><td class="csamp">TVS</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Priority</span></td><td class="cdesc">Ticket urgency: Critical / High / Medium / Low.</td><td class="csamp">Medium</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Assigned To</span></td><td class="cdesc">Developer name with Employee ID in brackets.</td><td class="csamp">Sobana. M (EM5846)</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Development Target Date</span></td><td class="cdesc">Deadline set by dev team to deliver the fix.</td><td class="csamp">28-02-2026</td><td><span class="creq o">Optional</span></td></tr>
-            <tr><td><span class="cfn">Development Start Date</span></td><td class="cdesc">Date when dev work actually started.</td><td class="csamp">14-02-2026</td><td><span class="creq o">Optional</span></td></tr>
-            <tr><td><span class="cfn">Reviewed Date</span></td><td class="cdesc">Last date the ticket was reviewed or updated.</td><td class="csamp">12-01-2026 15:48</td><td><span class="creq o">Optional</span></td></tr>
-            <tr><td><span class="cfn">Current Date IST</span></td><td class="cdesc">Today's date/time in IST — used to compute days.</td><td class="csamp">06-03-2026 22:28</td><td><span class="creq o">Optional</span></td></tr>
-            <tr><td><span class="cfn">Days Since Reviewed</span></td><td class="cdesc">No. of days since last reviewed. &gt;20=red, &gt;7=amber, ≤7=green.</td><td class="csamp">53</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Is Overdue</span></td><td class="cdesc">Has ticket passed its target date? Value: YES or NO.</td><td class="csamp">YES</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Assigned Status</span></td><td class="cdesc">Delay classification: Critical Delay / Moderate Delay / blank.</td><td class="csamp">Critical Delay</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Status</span></td><td class="cdesc">Current ticket status: Open / Under Development / Under Observation / Development Fixed.</td><td class="csamp">Open</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Ticket ID</span></td><td class="cdesc">Unique Zoho ticket number.</td><td class="csamp">1116</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Project/client.</td><td class="csamp">TVS</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Priority</span></td><td class="cdesc">Critical/High/Medium/Low.</td><td class="csamp">Medium</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Assigned To</span></td><td class="cdesc">Developer name + ID.</td><td class="csamp">Sobana. M (EM5846)</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Development Target Date</span></td><td class="cdesc">Dev deadline.</td><td class="csamp">28-02-2026</td><td><span class="creq o">Opt</span></td></tr>
+            <tr><td><span class="cfn">Days Since Reviewed</span></td><td class="cdesc">&gt;20=red, &gt;7=amber.</td><td class="csamp">53</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Is Overdue</span></td><td class="cdesc">YES or NO.</td><td class="csamp">YES</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Assigned Status</span></td><td class="cdesc">Critical / Moderate Delay.</td><td class="csamp">Critical Delay</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Status</span></td><td class="cdesc">Open/Under Dev/Observation/Fixed.</td><td class="csamp">Open</td><td><span class="creq r">Req</span></td></tr>
           </tbody>
         </table>
       </div>
-      <div style="margin:6px 14px 10px;padding:8px 10px;background:rgba(88,166,255,.06);border:1px solid rgba(88,166,255,.18);border-radius:6px;">
-        <div style="font-size:9px;color:var(--accent);line-height:1.7;">💡 <strong>Flexible names</strong> — auto-detected. "Project" = "Project Name" · "Days" = "Days Since Reviewed" · "Dev" = "Under Development Tickets"</div>
-      </div>
     </div>
   </div>
-
   <div class="section-label">Step 1 — Upload Files</div>
-
   <div class="upload-card">
-    <div class="upload-card-header">
-      <span class="upload-card-icon">📊</span>
-      <div><div class="upload-card-title">File 1 — Summary Report</div><div class="upload-card-desc">Project-wise ticket counts · 7 columns</div></div>
-    </div>
-    <div class="upload-zone" id="zone1" onclick="document.getElementById('file1').click()">
-      <div class="upload-zone-icon">📂</div>
-      <div class="upload-zone-label">Click or drag &amp; drop</div>
-      <div class="upload-zone-hint">.xlsx / .xls / .csv</div>
-    </div>
+    <div class="upload-card-header"><span class="upload-card-icon">📊</span><div><div class="upload-card-title">File 1 — Summary Report</div><div class="upload-card-desc">Project-wise ticket counts · 7 columns</div></div></div>
+    <div class="upload-zone" id="zone1" onclick="document.getElementById('file1').click()"><div class="upload-zone-icon">📂</div><div class="upload-zone-label">Click or drag &amp; drop</div><div class="upload-zone-hint">.xlsx / .xls / .csv</div></div>
     <div class="upload-status" id="status1">✅ Loaded</div>
     <input type="file" id="file1" accept=".xlsx,.xls,.csv" style="display:none">
   </div>
-
   <div class="upload-card">
-    <div class="upload-card-header">
-      <span class="upload-card-icon">🔍</span>
-      <div><div class="upload-card-title">File 2 — Detailed Ticket Report</div><div class="upload-card-desc">Per-ticket assignee, delay &amp; status · 12 columns</div></div>
-    </div>
-    <div class="upload-zone" id="zone2" onclick="document.getElementById('file2').click()">
-      <div class="upload-zone-icon">📂</div>
-      <div class="upload-zone-label">Click or drag &amp; drop</div>
-      <div class="upload-zone-hint">.xlsx / .xls / .csv</div>
-    </div>
+    <div class="upload-card-header"><span class="upload-card-icon">🔍</span><div><div class="upload-card-title">File 2 — Detailed Ticket Report</div><div class="upload-card-desc">Per-ticket assignee, delay &amp; status · 12 columns</div></div></div>
+    <div class="upload-zone" id="zone2" onclick="document.getElementById('file2').click()"><div class="upload-zone-icon">📂</div><div class="upload-zone-label">Click or drag &amp; drop</div><div class="upload-zone-hint">.xlsx / .xls / .csv</div></div>
     <div class="upload-status" id="status2">✅ Loaded</div>
     <input type="file" id="file2" accept=".xlsx,.xls,.csv" style="display:none">
   </div>
-
   <div id="dataPanel1" style="display:none;">
     <div class="section-label">Step 2 — Data Summary</div>
     <div class="stats-grid" id="statsGrid1"></div>
@@ -226,417 +220,752 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     <div class="section-label">Delay Overview</div>
     <div class="stats-grid" id="delayStats1"></div>
     <div class="section-label">Step 3 — Generate &amp; Share</div>
+    <div class="signature-option">
+      <input type="checkbox" id="signature1" class="signature-checkbox" checked>
+      <label for="signature1" class="signature-label">Include Signature Block <small>(recommended)</small></label>
+    </div>
     <button class="gen-btn" onclick="generateTicketEmail()">⚡ Generate Ticket Reminder Email</button>
     <div class="share-row">
-      <button class="share-btn copy"     id="copyBtn1"    disabled onclick="copyHTML(1)">📋 Copy HTML</button>
-      <button class="share-btn download" id="dlBtn1"      disabled onclick="downloadHTML(1)">⬇ Download</button>
-      <button class="share-btn print"    id="printBtn1"   disabled onclick="printEmail(1)">🖨 Print/PDF</button>
-      <button class="share-btn outlook"  id="outlookBtn1" disabled onclick="openInBrowser(1)">📧 Send via Outlook</button>
+      <button class="share-btn copy" id="copyBtn1" disabled onclick="copyHTML(1)">📋 Copy HTML</button>
+      <button class="share-btn download" id="dlBtn1" disabled onclick="downloadHTML(1)">⬇ Download</button>
+      <button class="share-btn print" id="printBtn1" disabled onclick="printEmail(1)">🖨 Print/PDF</button>
+      <button class="share-btn outlook" id="outlookBtn1" disabled onclick="openInBrowser(1)">📧 Send via Outlook</button>
     </div>
     <div class="outlook-tip" id="outlookTip1">
       <div class="outlook-tip-title">📧 How to paste into Outlook:</div>
       <div class="outlook-tip-step"><div class="outlook-tip-num">1</div><div class="outlook-tip-text">Click <strong style="color:#fff;">"Open Email in New Tab"</strong> below.</div></div>
       <div class="outlook-tip-step"><div class="outlook-tip-num">2</div><div class="outlook-tip-text">Press <strong style="color:#fff;">Ctrl+A</strong> then <strong style="color:#fff;">Ctrl+C</strong> to copy.</div></div>
-      <div class="outlook-tip-step"><div class="outlook-tip-num">3</div><div class="outlook-tip-text">Outlook → New Email → click <strong style="color:#fff;">body</strong> → <strong style="color:#fff;">Ctrl+V</strong>.</div></div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">3</div><div class="outlook-tip-text">Outlook → New Email → click body → <strong style="color:#fff;">Ctrl+V</strong>.</div></div>
       <div class="outlook-tip-step"><div class="outlook-tip-num">4</div><div class="outlook-tip-text">Add recipients → <strong style="color:#fff;">Send</strong> ✅</div></div>
       <button onclick="openInBrowserNow(1)" style="width:100%;margin-top:10px;background:#ff9f7f;color:#1a1a1a;border:none;border-radius:7px;padding:9px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;">🚀 Open Email in New Tab</button>
     </div>
   </div>
 </div>
-
-<!-- TAB 1 RIGHT -->
 <div class="right" id="right-ticket">
   <div class="preview-label">Email Preview</div>
   <div class="tab-bar" id="tabBar1" style="display:none;">
     <button class="tab-btn active" id="ptab1" onclick="switchPreviewTab(1)">📊 Summary View</button>
-    <button class="tab-btn"        id="ptab2" onclick="switchPreviewTab(2)">🔍 Detailed View</button>
+    <button class="tab-btn" id="ptab2" onclick="switchPreviewTab(2)">🔍 Detailed View</button>
   </div>
-  <div id="emailPreview1">
-    <div class="empty-state">
-      <div class="empty-icon">🎫</div>
-      <div class="empty-title">Ticket Reminder Email</div>
-      <div class="empty-sub">Upload both files on the left, then click Generate.</div>
-    </div>
-  </div>
+  <div id="emailPreview1"><div class="empty-state"><div class="empty-icon">🎫</div><div class="empty-title">Ticket Reminder Email</div><div class="empty-sub">Upload both files on the left, then click Generate.</div></div></div>
 </div>
 
-<!-- ═══════════════════════ TAB 2 LEFT ═══════════════════════ -->
+<!-- ═══════════════════════ TAB 2 — ZERO CALLS ═══════════════════════ -->
 <div class="left" id="left-zero" style="display:none;">
-
   <div class="section-label">Column Fields Reference</div>
   <div class="col-ref">
     <div class="col-ref-hdr" onclick="toggleRef('r2')">
-      <div class="col-ref-ttl">📋 All Column Names — Zero Support Calls <span style="font-size:9px;color:var(--muted);font-weight:400;">(1 file · 4 columns)</span></div>
+      <div class="col-ref-ttl">📋 Zero Support Calls <span style="font-size:9px;color:var(--muted);font-weight:400;">(1 file · 4 columns)</span></div>
       <span class="col-ref-arrow" id="r2-arr">▶</span>
     </div>
     <div class="col-ref-body" id="r2-body">
       <div class="col-file-sec">
         <span class="cfl green">📴 Zero Support Calls Report (4 columns)</span>
         <table class="ctbl">
-          <thead><tr><th>Column Name</th><th>Description</th><th>Sample Value</th><th></th></tr></thead>
+          <thead><tr><th>Column Name</th><th>Description</th><th>Sample</th><th></th></tr></thead>
           <tbody>
-            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Client or project name. One row per zero-call project.</td><td class="csamp">DANA ANAND-PUNE</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Total Tickets</span></td><td class="cdesc">Total historical tickets ever raised for this project.</td><td class="csamp">18</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Last Created Time</span></td><td class="cdesc">Date and time of last ticket. Auto-converts Excel serial numbers like 46055.00011574074.</td><td class="csamp">16 Jan, 2026 11:33</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Days Difference</span></td><td class="cdesc">Days since last support call. &gt;45=red, &gt;30=orange, &gt;14=amber, ≤14=green.</td><td class="csamp">45</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Client/project name.</td><td class="csamp">DANA ANAND-PUNE</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Total Tickets</span></td><td class="cdesc">Total historical tickets.</td><td class="csamp">18</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Last Created Time</span></td><td class="cdesc">Auto-converts Excel serials.</td><td class="csamp">16 Jan, 2026 11:33</td><td><span class="creq r">Req</span></td></tr>
+            <tr><td><span class="cfn">Days Difference</span></td><td class="cdesc">&gt;45=red, &gt;30=orange, &gt;14=amber.</td><td class="csamp">45</td><td><span class="creq r">Req</span></td></tr>
           </tbody>
         </table>
       </div>
-      <div style="margin:6px 14px 12px;padding:8px 10px;background:rgba(232,121,58,.07);border:1px solid rgba(232,121,58,.22);border-radius:6px;">
-        <div style="font-size:9px;color:var(--orange);line-height:1.7;">💡 <strong>Auto date fix</strong> — Excel serial numbers (e.g. 46055.00011574074) are automatically converted to readable dates like "16-01-2026 11:33".</div>
-      </div>
     </div>
   </div>
-
   <div class="section-label">Step 1 — Upload File</div>
-
   <div class="upload-card">
-    <div class="upload-card-header">
-      <span class="upload-card-icon">📴</span>
-      <div><div class="upload-card-title">Zero Support Calls Report</div><div class="upload-card-desc">Projects with no recent support activity · 4 columns</div></div>
-    </div>
-    <div class="upload-zone" id="zone3" onclick="document.getElementById('file3').click()">
-      <div class="upload-zone-icon">📂</div>
-      <div class="upload-zone-label">Click or drag &amp; drop</div>
-      <div class="upload-zone-hint">.xlsx / .xls / .csv</div>
-    </div>
+    <div class="upload-card-header"><span class="upload-card-icon">📴</span><div><div class="upload-card-title">Zero Support Calls Report</div><div class="upload-card-desc">Projects with no recent support activity · 4 columns</div></div></div>
+    <div class="upload-zone" id="zone3" onclick="document.getElementById('file3').click()"><div class="upload-zone-icon">📂</div><div class="upload-zone-label">Click or drag &amp; drop</div><div class="upload-zone-hint">.xlsx / .xls / .csv</div></div>
     <div class="upload-status" id="status3">✅ Loaded</div>
     <input type="file" id="file3" accept=".xlsx,.xls,.csv" style="display:none">
   </div>
-
   <div id="dataPanel2" style="display:none;">
     <div class="section-label">Step 2 — Data Summary</div>
     <div class="stats-grid" id="statsGrid2"></div>
     <div class="section-label">Projects</div>
     <div class="proj-list" id="projList2"></div>
     <div class="section-label">Step 3 — Generate &amp; Share</div>
+    <div class="signature-option">
+      <input type="checkbox" id="signature2" class="signature-checkbox" checked>
+      <label for="signature2" class="signature-label">Include Signature Block <small>(recommended)</small></label>
+    </div>
     <button class="gen-btn orange" onclick="generateZeroEmail()">⚡ Generate Zero Calls Email</button>
     <div class="share-row">
-      <button class="share-btn copy"     id="copyBtn2"    disabled onclick="copyHTML(2)">📋 Copy HTML</button>
-      <button class="share-btn download" id="dlBtn2"      disabled onclick="downloadHTML(2)">⬇ Download</button>
-      <button class="share-btn print"    id="printBtn2"   disabled onclick="printEmail(2)">🖨 Print/PDF</button>
-      <button class="share-btn outlook"  id="outlookBtn2" disabled onclick="openInBrowser(2)">📧 Send via Outlook</button>
+      <button class="share-btn copy" id="copyBtn2" disabled onclick="copyHTML(2)">📋 Copy HTML</button>
+      <button class="share-btn download" id="dlBtn2" disabled onclick="downloadHTML(2)">⬇ Download</button>
+      <button class="share-btn print" id="printBtn2" disabled onclick="printEmail(2)">🖨 Print/PDF</button>
+      <button class="share-btn outlook" id="outlookBtn2" disabled onclick="openInBrowser(2)">📧 Send via Outlook</button>
     </div>
     <div class="outlook-tip" id="outlookTip2">
       <div class="outlook-tip-title">📧 How to paste into Outlook:</div>
       <div class="outlook-tip-step"><div class="outlook-tip-num">1</div><div class="outlook-tip-text">Click <strong style="color:#fff;">"Open Email in New Tab"</strong> below.</div></div>
       <div class="outlook-tip-step"><div class="outlook-tip-num">2</div><div class="outlook-tip-text">Press <strong style="color:#fff;">Ctrl+A</strong> then <strong style="color:#fff;">Ctrl+C</strong> to copy.</div></div>
-      <div class="outlook-tip-step"><div class="outlook-tip-num">3</div><div class="outlook-tip-text">Outlook → New Email → click <strong style="color:#fff;">body</strong> → <strong style="color:#fff;">Ctrl+V</strong>.</div></div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">3</div><div class="outlook-tip-text">Outlook → New Email → click body → <strong style="color:#fff;">Ctrl+V</strong>.</div></div>
       <div class="outlook-tip-step"><div class="outlook-tip-num">4</div><div class="outlook-tip-text">Add recipients → <strong style="color:#fff;">Send</strong> ✅</div></div>
       <button onclick="openInBrowserNow(2)" style="width:100%;margin-top:10px;background:#ff9f7f;color:#1a1a1a;border:none;border-radius:7px;padding:9px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;">🚀 Open Email in New Tab</button>
     </div>
   </div>
 </div>
-
-<!-- TAB 2 RIGHT -->
 <div class="right" id="right-zero" style="display:none;">
   <div class="preview-label">Email Preview</div>
-  <div id="emailPreview2">
-    <div class="empty-state">
-      <div class="empty-icon">📴</div>
-      <div class="empty-title">Zero Support Calls Email</div>
-      <div class="empty-sub">Upload the report on the left, then click Generate.</div>
+  <div id="emailPreview2"><div class="empty-state"><div class="empty-icon">📴</div><div class="empty-title">Zero Support Calls Email</div><div class="empty-sub">Upload the report on the left, then click Generate.</div></div></div>
+</div>
+
+<!-- ═══════════════════════ TAB 3 — UNDER DEVELOPMENT ═══════════════════════ -->
+<div class="left" id="left-dev" style="display:none;">
+  <div class="section-label">Column Fields Reference</div>
+  <div class="col-ref">
+    <div class="col-ref-hdr" onclick="toggleRef('r3')">
+      <div class="col-ref-ttl">📋 Under Development Report <span style="font-size:9px;color:var(--muted);font-weight:400;">(1 file · 11 columns)</span></div>
+      <span class="col-ref-arrow" id="r3-arr">▶</span>
+    </div>
+    <div class="col-ref-body" id="r3-body">
+      <div class="col-file-sec">
+        <span class="cfl teal">🛠 Under Development Report (11 columns)</span>
+        <table class="ctbl">
+          <thead><tr><th>Column Name</th><th>Description</th><th>Sample Value</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><span class="cfn">Request ID</span></td><td class="cdesc">Unique Zoho ticket / request ID number.</td><td class="csamp">1116</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Client or project this ticket belongs to.</td><td class="csamp">TVS</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Priority</span></td><td class="cdesc">Ticket urgency: Critical / High / Medium / Low.</td><td class="csamp">High</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Ticket Created By</span></td><td class="cdesc">Name of the person who raised the ticket.</td><td class="csamp">Ravi Kumar</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Assigned To</span></td><td class="cdesc">Developer name responsible for the fix.</td><td class="csamp">Sobana. M (EM5846)</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Subject</span></td><td class="cdesc">Brief title / summary of the ticket issue.</td><td class="csamp">Login page error on IE11</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Description</span></td><td class="cdesc">Detailed description of the reported issue.</td><td class="csamp">User unable to login using IE11 browser...</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Resolution</span></td><td class="cdesc">Resolution steps or findings noted so far.</td><td class="csamp">Investigating browser compatibility issue.</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Developer Solution</span></td><td class="cdesc">Solution provided by the developer after fix.</td><td class="csamp">Updated CSS for IE11 compatibility. Build deployed.</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Status</span></td><td class="cdesc">Current ticket status. Should be "Under Development".</td><td class="csamp">Under Development</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Created Time</span></td><td class="cdesc">Date &amp; time the ticket was originally created. Auto-converts Excel serials.</td><td class="csamp">10-02-2026 09:30</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Modified Time</span></td><td class="cdesc">Date &amp; time of last status update / modification. Auto-converts Excel serials.</td><td class="csamp">06-03-2026 14:22</td><td><span class="creq r">Required</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin:6px 14px 12px;padding:8px 10px;background:rgba(14,154,167,.07);border:1px solid rgba(14,154,167,.22);border-radius:6px;">
+        <div style="font-size:9px;color:var(--teal-light);line-height:1.7;">💡 <strong>Flexible names</strong> — auto-detected. "Request" or "Ticket" = "Request ID" · "Created By" = "Ticket Created By" · "Dev Solution" = "Developer Solution" · "Modified" = "Modified Time"</div>
+      </div>
     </div>
   </div>
+
+  <div class="section-label">Step 1 — Upload File</div>
+  <div class="upload-card">
+    <div class="upload-card-header"><span class="upload-card-icon">🛠</span><div><div class="upload-card-title">Under Development Report</div><div class="upload-card-desc">Tickets currently in development · 11 columns</div></div></div>
+    <div class="upload-zone" id="zone4" onclick="document.getElementById('file4').click()"><div class="upload-zone-icon">📂</div><div class="upload-zone-label">Click or drag &amp; drop</div><div class="upload-zone-hint">.xlsx / .xls / .csv</div></div>
+    <div class="upload-status" id="status4">✅ Loaded</div>
+    <input type="file" id="file4" accept=".xlsx,.xls,.csv" style="display:none">
+  </div>
+
+  <div id="dataPanel3" style="display:none;">
+    <div class="section-label">Step 2 — Data Summary</div>
+    <div class="stats-grid" id="statsGrid3"></div>
+    <div class="section-label">Projects</div>
+    <div class="proj-list" id="projList3"></div>
+    <div class="section-label">Priority Breakdown</div>
+    <div class="stats-grid" id="prioStats3"></div>
+    <div class="section-label">Step 3 — Generate &amp; Share</div>
+    <div class="signature-option">
+      <input type="checkbox" id="signature3" class="signature-checkbox" checked>
+      <label for="signature3" class="signature-label">Include Signature Block <small>(recommended)</small></label>
+    </div>
+    <button class="gen-btn teal" onclick="generateDevEmail()">⚡ Generate Under Development Email</button>
+    <div class="share-row">
+      <button class="share-btn copy" id="copyBtn3" disabled onclick="copyHTML(3)">📋 Copy HTML</button>
+      <button class="share-btn download" id="dlBtn3" disabled onclick="downloadHTML(3)">⬇ Download</button>
+      <button class="share-btn print" id="printBtn3" disabled onclick="printEmail(3)">🖨 Print/PDF</button>
+      <button class="share-btn outlook" id="outlookBtn3" disabled onclick="openInBrowser(3)">📧 Send via Outlook</button>
+    </div>
+    <div class="outlook-tip" id="outlookTip3">
+      <div class="outlook-tip-title">📧 How to paste into Outlook:</div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">1</div><div class="outlook-tip-text">Click <strong style="color:#fff;">"Open Email in New Tab"</strong> below.</div></div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">2</div><div class="outlook-tip-text">Press <strong style="color:#fff;">Ctrl+A</strong> then <strong style="color:#fff;">Ctrl+C</strong> to copy.</div></div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">3</div><div class="outlook-tip-text">Outlook → New Email → click body → <strong style="color:#fff;">Ctrl+V</strong>.</div></div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">4</div><div class="outlook-tip-text">Add recipients → <strong style="color:#fff;">Send</strong> ✅</div></div>
+      <button onclick="openInBrowserNow(3)" style="width:100%;margin-top:10px;background:#ff9f7f;color:#1a1a1a;border:none;border-radius:7px;padding:9px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;">🚀 Open Email in New Tab</button>
+    </div>
+  </div>
+</div>
+<div class="right" id="right-dev" style="display:none;">
+  <div class="preview-label">Email Preview</div>
+  <div id="emailPreview3"><div class="empty-state"><div class="empty-icon">🛠</div><div class="empty-title">Under Development Email</div><div class="empty-sub">Upload the report on the left, then click Generate.</div></div></div>
+</div>
+
+<!-- ═══════════════════════ TAB 4 — UNDER OBSERVATION ═══════════════════════ -->
+<div class="left" id="left-obs" style="display:none;">
+  <div class="section-label">Column Fields Reference</div>
+  <div class="col-ref">
+    <div class="col-ref-hdr" onclick="toggleRef('r4')">
+      <div class="col-ref-ttl">📋 Under Observation Report <span style="font-size:9px;color:var(--muted);font-weight:400;">(1 file · 11 columns)</span></div>
+      <span class="col-ref-arrow" id="r4-arr">▶</span>
+    </div>
+    <div class="col-ref-body" id="r4-body">
+      <div class="col-file-sec">
+        <span class="cfl purple">🔵 Under Observation Follow-up Report (11 columns)</span>
+        <table class="ctbl">
+          <thead><tr><th>Column Name</th><th>Description</th><th>Sample Value</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><span class="cfn">Request ID</span></td><td class="cdesc">Unique Zoho ticket / request ID number.</td><td class="csamp">1116</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Client or project this ticket belongs to.</td><td class="csamp">TVS</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Priority</span></td><td class="cdesc">Ticket urgency: Critical / High / Medium / Low.</td><td class="csamp">High</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Ticket Created By</span></td><td class="cdesc">Name of the person who raised the ticket.</td><td class="csamp">Ravi Kumar</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Assigned To</span></td><td class="cdesc">Developer name responsible for the fix.</td><td class="csamp">Sobana. M (EM5846)</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Subject</span></td><td class="cdesc">Brief title / summary of the ticket issue.</td><td class="csamp">Login page error on IE11</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Description</span></td><td class="cdesc">Detailed description of the reported issue.</td><td class="csamp">User unable to login using IE11 browser...</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Resolution</span></td><td class="cdesc">Resolution steps or findings noted during observation.</td><td class="csamp">Fix verified by QA in staging environment.</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Developer Solution</span></td><td class="cdesc">Solution provided by the developer after fix.</td><td class="csamp">Updated CSS for IE11 compatibility.</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Status</span></td><td class="cdesc">Current ticket status. Should be "Under Observation".</td><td class="csamp">Under Observation</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Created Time</span></td><td class="cdesc">Date &amp; time the ticket was originally created. Auto-converts Excel serials.</td><td class="csamp">10-02-2026 09:30</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Modified Time</span></td><td class="cdesc">Date &amp; time of last status update / modification. Auto-converts Excel serials.</td><td class="csamp">06-03-2026 14:22</td><td><span class="creq r">Required</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin:6px 14px 12px;padding:8px 10px;background:rgba(155,89,182,.07);border:1px solid rgba(155,89,182,.22);border-radius:6px;">
+        <div style="font-size:9px;color:var(--purple-light);line-height:1.7;">💡 <strong>Flexible names</strong> — auto-detected. "Request" or "Ticket" = "Request ID" · "Created By" = "Ticket Created By" · "Dev Solution" = "Developer Solution" · "Modified" = "Modified Time"</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-label">Step 1 — Upload File</div>
+  <div class="upload-card">
+    <div class="upload-card-header"><span class="upload-card-icon">🔵</span><div><div class="upload-card-title">Under Observation Follow-up Report</div><div class="upload-card-desc">Tickets pending client/QA sign-off · 11 columns</div></div></div>
+    <div class="upload-zone" id="zone5" onclick="document.getElementById('file5').click()"><div class="upload-zone-icon">📂</div><div class="upload-zone-label">Click or drag &amp; drop</div><div class="upload-zone-hint">.xlsx / .xls / .csv</div></div>
+    <div class="upload-status" id="status5">✅ Loaded</div>
+    <input type="file" id="file5" accept=".xlsx,.xls,.csv" style="display:none">
+  </div>
+  <div id="dataPanel4" style="display:none;">
+    <div class="section-label">Step 2 — Data Summary</div>
+    <div class="stats-grid" id="statsGrid4"></div>
+    <div class="section-label">Projects</div>
+    <div class="proj-list" id="projList4"></div>
+    <div class="section-label">Priority Breakdown</div>
+    <div class="stats-grid" id="obsStats4"></div>
+    <div class="section-label">Step 3 — Generate &amp; Share</div>
+    <div class="signature-option">
+      <input type="checkbox" id="signature4" class="signature-checkbox" checked>
+      <label for="signature4" class="signature-label">Include Signature Block <small>(recommended)</small></label>
+    </div>
+    <button class="gen-btn purple" onclick="generateObsEmail()">⚡ Generate Observation Follow-up Email</button>
+    <div class="share-row">
+      <button class="share-btn copy" id="copyBtn4" disabled onclick="copyHTML(4)">📋 Copy HTML</button>
+      <button class="share-btn download" id="dlBtn4" disabled onclick="downloadHTML(4)">⬇ Download</button>
+      <button class="share-btn print" id="printBtn4" disabled onclick="printEmail(4)">🖨 Print/PDF</button>
+      <button class="share-btn outlook" id="outlookBtn4" disabled onclick="openInBrowser(4)">📧 Send via Outlook</button>
+    </div>
+    <div class="outlook-tip" id="outlookTip4">
+      <div class="outlook-tip-title">📧 How to paste into Outlook:</div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">1</div><div class="outlook-tip-text">Click <strong style="color:#fff;">"Open Email in New Tab"</strong> below.</div></div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">2</div><div class="outlook-tip-text">Press <strong style="color:#fff;">Ctrl+A</strong> then <strong style="color:#fff;">Ctrl+C</strong> to copy.</div></div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">3</div><div class="outlook-tip-text">Outlook → New Email → click body → <strong style="color:#fff;">Ctrl+V</strong>.</div></div>
+      <div class="outlook-tip-step"><div class="outlook-tip-num">4</div><div class="outlook-tip-text">Add recipients → <strong style="color:#fff;">Send</strong> ✅</div></div>
+      <button onclick="openInBrowserNow(4)" style="width:100%;margin-top:10px;background:#ff9f7f;color:#1a1a1a;border:none;border-radius:7px;padding:9px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;">🚀 Open Email in New Tab</button>
+    </div>
+  </div>
+</div>
+<div class="right" id="right-obs" style="display:none;">
+  <div class="preview-label">Email Preview</div>
+  <div id="emailPreview4"><div class="empty-state"><div class="empty-icon">🔵</div><div class="empty-title">Under Observation Follow-up Email</div><div class="empty-sub">Upload the report on the left, then click Generate.</div></div></div>
 </div>
 
 </div><!-- /layout -->
 <div class="toast" id="toast"></div>
 
 <script>
-let summaryData=[],detailData=[],zeroData=[];
-let ticketHTML=['',''];
-let zeroHTML='';
-let activePTab=1;
+// ============================================
+// DATA STORES
+// ============================================
+let summaryData = [];
+let detailData = [];
+let zeroData = [];
+let devData = [];
+let obsData = [];
+let ticketHTML = ['', ''];
+let zeroHTML = '';
+let devHTML = '';
+let obsHTML = '';
+let activePTab = 1;
 
-// ═══════════════════════════════════════════════════════════
-// EXCEL SERIAL DATE CONVERTER
-// Excel stores dates as days since 1900-01-00 (with leap year bug)
-// e.g. 46055.00011574074 → "16-01-2026 00:01"
-// ═══════════════════════════════════════════════════════════
+// ============================================
+// HELPER FUNCTIONS
+// ============================================
+
+// Excel serial date converter
 function excelSerialToDate(serial) {
-  // Check if it looks like an Excel serial: pure number, 5 digits integer part (year range ~1900-2100)
   const num = parseFloat(serial);
   if (isNaN(num) || num < 1 || num > 100000) return null;
-  // Must be a number-like value with no letters
   if (typeof serial === 'string' && /[a-zA-Z]/.test(serial)) return null;
-
-  // Excel epoch: Dec 31, 1899 (with intentional leap year bug for 1900)
-  const excelEpoch = new Date(1899, 11, 30); // JS: Dec 30 1899 compensates for Excel's leap bug
+  const excelEpoch = new Date(1899, 11, 30);
   const days = Math.floor(num);
   const timeFraction = num - days;
-
   const date = new Date(excelEpoch.getTime() + days * 86400000);
   const totalSeconds = Math.round(timeFraction * 86400);
   const hh = Math.floor(totalSeconds / 3600);
   const mm = Math.floor((totalSeconds % 3600) / 60);
-
   const dd = String(date.getDate()).padStart(2, '0');
   const mo = String(date.getMonth() + 1).padStart(2, '0');
   const yyyy = date.getFullYear();
-  const hhStr = String(hh).padStart(2, '0');
-  const mmStr = String(mm).padStart(2, '0');
-
-  return `${dd}-${mo}-${yyyy} ${hhStr}:${mmStr}`;
+  return `${dd}-${mo}-${yyyy} ${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
 }
 
-// ── Smart date field parser: handles both text dates AND Excel serials ──
 function parseDate(val) {
   if (val === null || val === undefined || val === '') return '';
   const str = String(val).trim();
   if (!str || str === '0') return '';
-
-  // If it looks like a pure number (Excel serial), try converting
   if (/^\d+(\.\d+)?$/.test(str)) {
-    const converted = excelSerialToDate(str);
-    if (converted) return converted;
+    const c = excelSerialToDate(str);
+    if (c) return c;
   }
-
-  // Otherwise return as-is (already a formatted date string)
   return str;
 }
 
-// ═══════════════════════════════════════════════════════════
+// Calculate days difference between a date and today
+function getDaysDifference(dateStr) {
+  if (!dateStr || dateStr === '—') return null;
+  
+  // Parse date string in format DD-MM-YYYY HH:MM
+  const parts = dateStr.split(' ');
+  if (parts.length < 1) return null;
+  
+  const dateParts = parts[0].split('-');
+  if (dateParts.length !== 3) return null;
+  
+  const day = parseInt(dateParts[0]);
+  const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed
+  const year = parseInt(dateParts[2]);
+  
+  const date = new Date(year, month, day);
+  const today = new Date();
+  
+  // Reset time part for accurate day calculation
+  today.setHours(0, 0, 0, 0);
+  date.setHours(0, 0, 0, 0);
+  
+  const diffTime = today - date;
+  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+  
+  return diffDays;
+}
 
-function switchMainTab(tab,el){
-  document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));
+// Truncate text to 2-3 lines (approximately 150 characters)
+function truncateToLines(text, maxLines = 3) {
+  if (!text || text === '—') return '—';
+  if (text.length <= 150) return text;
+  return text.substring(0, 150) + '…';
+}
+
+// Normalize key for fuzzy matching
+function nk(k) {
+  return k.toString().toLowerCase().replace(/[\s_\-]/g, '').replace(/[^a-z0-9]/g, '');
+}
+
+// Fuzzy key finder
+function fk(obj, pats) {
+  const keys = Object.keys(obj);
+  for (const p of pats) {
+    const f = keys.find(k => nk(k).includes(p));
+    if (f) return f;
+  }
+  return null;
+}
+
+// Truncate function (only used for preview, not for email generation)
+function trunc(s, n) {
+  if (!s) return '—';
+  return s.length > n ? s.substring(0, n) + '…' : s;
+}
+
+// ============================================
+// PARSER FUNCTIONS
+// ============================================
+
+function parseSummary(raw) {
+  if (!raw.length) return [];
+  const s = raw[0];
+  const nK = fk(s, ['projectname', 'project', 'name', 'client']);
+  const oK = fk(s, ['openticket', 'open']);
+  const dK = fk(s, ['underdevelopment', 'devticket', 'underdev', 'development', 'inprogress']);
+  const bK = fk(s, ['underobservation', 'observation', 'obs']);
+  const fxK = fk(s, ['developmentfixed', 'devfixed', 'fixed']);
+  const tK = fk(s, ['totalticket', 'total']);
+  const dtK = fk(s, ['lastcreated', 'lasttime', 'lastdate', 'createdat', 'date', 'time']);
+  
+  return raw.filter(r => {
+    const n = nK ? String(r[nK] || '').trim() : '';
+    return n && n.toLowerCase() !== 'total';
+  }).map(r => ({
+    project: nK ? String(r[nK] || '').trim() : '',
+    open: parseInt(r[oK] || 0) || 0,
+    dev: parseInt(r[dK] || 0) || 0,
+    obs: parseInt(r[bK] || 0) || 0,
+    fixed: parseInt(r[fxK] || 0) || 0,
+    total: parseInt(r[tK] || 0) || 0,
+    date: dtK ? parseDate(r[dtK]) : ''
+  })).map(r => {
+    if (!r.total) r.total = r.open + r.dev + r.obs + r.fixed;
+    return r;
+  });
+}
+
+function parseDetail(raw) {
+  if (!raw.length) return [];
+  const s = raw[0];
+  const idK = fk(s, ['ticketid', 'ticket', 'id']);
+  const pjK = fk(s, ['projectname', 'project', 'name', 'client']);
+  const prK = fk(s, ['priority']);
+  const asK = fk(s, ['assignedto', 'assigned', 'assignee']);
+  const dyK = fk(s, ['dayssincereviewed', 'dayssince', 'days']);
+  const ovK = fk(s, ['isoverdue', 'overdue']);
+  const asStK = fk(s, ['assignedstatus', 'assignstatus', 'delaystatus']);
+  const stK = fk(s, ['status']);
+  
+  return raw.map(r => ({
+    id: idK ? String(r[idK] || '') : '',
+    project: pjK ? String(r[pjK] || '').trim() : '',
+    priority: prK ? String(r[prK] || '') : '',
+    assignee: asK ? String(r[asK] || '') : '',
+    days: parseInt(r[dyK] || 0) || 0,
+    overdue: ovK ? String(r[ovK] || '') : '',
+    aStatus: asStK ? String(r[asStK] || '') : '',
+    status: stK ? String(r[stK] || '') : ''
+  })).filter(r => r.project);
+}
+
+function parseZero(raw) {
+  if (!raw.length) return [];
+  const s = raw[0];
+  const nK = fk(s, ['projectname', 'project', 'name', 'client']);
+  const tK = fk(s, ['totalticket', 'total', 'tickets']);
+  const dtK = fk(s, ['lastcreatedtime', 'lastcreated', 'lasttime', 'lastdate', 'createdat', 'date', 'time', 'last']);
+  const dyK = fk(s, ['daysdifference', 'dayssince', 'days', 'diff', 'dayssincelast']);
+  
+  return raw.filter(r => {
+    const n = nK ? String(r[nK] || '').trim() : '';
+    return n && n.toLowerCase() !== 'total';
+  }).map(r => ({
+    project: nK ? String(r[nK] || '').trim() : '',
+    total: parseInt(r[tK] || 0) || 0,
+    lastTime: dtK ? parseDate(r[dtK]) : '',
+    days: parseInt(r[dyK] || 0) || 0
+  }));
+}
+
+function parseDev(raw) {
+  if (!raw.length) return [];
+  const s = raw[0];
+  const idK = fk(s, ['requestid', 'ticketid', 'reqid', 'request', 'ticket', 'id']);
+  const pjK = fk(s, ['projectname', 'project', 'name', 'client']);
+  const prK = fk(s, ['priority']);
+  const cbK = fk(s, ['ticketcreatedby', 'createdby', 'raisedby', 'requestedby', 'createdbyname']);
+  const asK = fk(s, ['assignedto', 'assigned', 'assignee']);
+  const subK = fk(s, ['subject', 'title', 'summary', 'issue']);
+  const descK = fk(s, ['description', 'desc', 'details', 'detail']);
+  const resK = fk(s, ['resolution', 'resolve', 'resolutionnotes']);
+  const devSK = fk(s, ['developersolution', 'devsolution', 'solution', 'devsol', 'fixnotes']);
+  const stK = fk(s, ['status']);
+  const ctK = fk(s, ['createdtime', 'createdat', 'createddate', 'ticketcreated', 'created']);
+  const mtK = fk(s, ['modifiedtime', 'modifiedat', 'modifieddate', 'lastupdated', 'modified', 'lastmodified', 'updatedat']);
+  
+  return raw.filter(r => {
+    const n = pjK ? String(r[pjK] || '').trim() : '';
+    return n && n.toLowerCase() !== 'total';
+  }).map(r => ({
+    id: idK ? String(r[idK] || '').trim() : '',
+    project: pjK ? String(r[pjK] || '').trim() : '',
+    priority: prK ? String(r[prK] || '').trim() : '',
+    createdBy: cbK ? String(r[cbK] || '').trim() : '',
+    assignee: asK ? String(r[asK] || '').trim() : '',
+    subject: subK ? String(r[subK] || '').trim() : '',
+    desc: descK ? String(r[descK] || '').trim() : '',
+    resolution: resK ? String(r[resK] || '').trim() : '',
+    devSolution: devSK ? String(r[devSK] || '').trim() : '',
+    status: stK ? String(r[stK] || '').trim() : '',
+    createdTime: ctK ? parseDate(r[ctK]) : '',
+    modifiedTime: mtK ? parseDate(r[mtK]) : ''
+  }));
+}
+
+function parseObs(raw) {
+  if (!raw.length) return [];
+  const s = raw[0];
+  const idK = fk(s, ['requestid', 'ticketid', 'reqid', 'request', 'ticket', 'id']);
+  const pjK = fk(s, ['projectname', 'project', 'name', 'client']);
+  const prK = fk(s, ['priority']);
+  const cbK = fk(s, ['ticketcreatedby', 'createdby', 'raisedby', 'requestedby', 'createdbyname']);
+  const asK = fk(s, ['assignedto', 'assigned', 'assignee']);
+  const subK = fk(s, ['subject', 'title', 'summary', 'issue']);
+  const descK = fk(s, ['description', 'desc', 'details', 'detail']);
+  const resK = fk(s, ['resolution', 'resolve', 'resolutionnotes']);
+  const devSK = fk(s, ['developersolution', 'devsolution', 'solution', 'devsol', 'fixnotes']);
+  const stK = fk(s, ['status']);
+  const ctK = fk(s, ['createdtime', 'createdat', 'createddate', 'ticketcreated', 'created']);
+  const mtK = fk(s, ['modifiedtime', 'modifiedat', 'modifieddate', 'lastupdated', 'modified', 'lastmodified', 'updatedat']);
+  
+  return raw.filter(r => {
+    const n = pjK ? String(r[pjK] || '').trim() : '';
+    return n && n.toLowerCase() !== 'total';
+  }).map(r => ({
+    id: idK ? String(r[idK] || '').trim() : '',
+    project: pjK ? String(r[pjK] || '').trim() : '',
+    priority: prK ? String(r[prK] || '').trim() : '',
+    createdBy: cbK ? String(r[cbK] || '').trim() : '',
+    assignee: asK ? String(r[asK] || '').trim() : '',
+    subject: subK ? String(r[subK] || '').trim() : '',
+    desc: descK ? String(r[descK] || '').trim() : '',
+    resolution: resK ? String(r[resK] || '').trim() : '',
+    devSolution: devSK ? String(r[devSK] || '').trim() : '',
+    status: stK ? String(r[stK] || '').trim() : '',
+    createdTime: ctK ? parseDate(r[ctK]) : '',
+    modifiedTime: mtK ? parseDate(r[mtK]) : ''
+  })).filter(r => r.project);
+}
+
+// ============================================
+// UI FUNCTIONS
+// ============================================
+
+// Tab switching
+function switchMainTab(tab, el) {
+  document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  const iT=tab==='ticket';
-  ['left-ticket','right-ticket'].forEach(id=>document.getElementById(id).style.display=iT?'':'none');
-  ['left-zero','right-zero'].forEach(id=>document.getElementById(id).style.display=iT?'none':'');
+  ['ticket', 'zero', 'dev', 'obs'].forEach(t => {
+    document.getElementById('left-' + t).style.display = t === tab ? '' : 'none';
+    document.getElementById('right-' + t).style.display = t === tab ? '' : 'none';
+  });
 }
 
-function toggleRef(id){
-  const body=document.getElementById(id+'-body');
-  const arr=document.getElementById(id+'-arr');
-  const open=body.classList.contains('open');
-  body.classList.toggle('open',!open);
-  arr.textContent=open?'▶':'▼';
+function toggleRef(id) {
+  const body = document.getElementById(id + '-body');
+  const arr = document.getElementById(id + '-arr');
+  const open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  arr.textContent = open ? '▶' : '▼';
 }
 
-function setupUpload(zId,iId,sId,cb){
-  const z=document.getElementById(zId),inp=document.getElementById(iId),st=document.getElementById(sId);
-  inp.addEventListener('change',e=>{if(e.target.files[0])readXL(e.target.files[0],z,st,cb);});
-  z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});
-  z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));
-  z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');if(e.dataTransfer.files[0])readXL(e.dataTransfer.files[0],z,st,cb);});
+// File upload setup
+function setupUpload(zId, iId, sId, cb) {
+  const z = document.getElementById(zId);
+  const inp = document.getElementById(iId);
+  const st = document.getElementById(sId);
+  
+  inp.addEventListener('change', e => {
+    if (e.target.files[0]) readXL(e.target.files[0], z, st, cb);
+  });
+  
+  z.addEventListener('dragover', e => {
+    e.preventDefault();
+    z.classList.add('drag-over');
+  });
+  
+  z.addEventListener('dragleave', () => z.classList.remove('drag-over'));
+  
+  z.addEventListener('drop', e => {
+    e.preventDefault();
+    z.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) readXL(e.dataTransfer.files[0], z, st, cb);
+  });
 }
-function readXL(file,zone,stat,cb){
-  const r=new FileReader();
-  r.onload=e=>{
-    try{
-      // Use raw:true to get actual cell values before Excel formatting is applied
-      const wb=XLSX.read(e.target.result,{type:'array',cellDates:false,raw:true});
-      const ws=wb.Sheets[wb.SheetNames[0]];
-      const raw=XLSX.utils.sheet_to_json(ws,{defval:'',raw:true});
+
+function readXL(file, zone, stat, cb) {
+  const r = new FileReader();
+  r.onload = e => {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'array', cellDates: false, raw: true });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const raw = XLSX.utils.sheet_to_json(ws, { defval: '', raw: true });
       zone.classList.add('done');
-      zone.querySelector('.upload-zone-label').textContent='✅ '+file.name;
-      stat.style.display='block';
+      zone.querySelector('.upload-zone-label').textContent = '✅ ' + file.name;
+      stat.style.display = 'block';
       cb(raw);
-    }catch(err){alert('Could not read file: '+err.message);}
+    } catch (err) {
+      alert('Could not read file: ' + err.message);
+    }
   };
   r.readAsArrayBuffer(file);
 }
 
-function nk(k){return k.toString().toLowerCase().replace(/[\s_\-]/g,'').replace(/[^a-z0-9]/g,'');}
-function fk(obj,pats){const keys=Object.keys(obj);for(const p of pats){const f=keys.find(k=>nk(k).includes(p));if(f)return f;}return null;}
+// ============================================
+// SIDEBAR RENDERERS
+// ============================================
 
-function parseSummary(raw){
-  if(!raw.length)return[];
-  const s=raw[0];
-  const nK=fk(s,['projectname','project','name','client']);
-  const oK=fk(s,['openticket','open']);
-  const dK=fk(s,['underdevelopment','devticket','underdev','development','inprogress']);
-  const bK=fk(s,['underobservation','observation','obs']);
-  const fxK=fk(s,['developmentfixed','devfixed','fixed']);
-  const tK=fk(s,['totalticket','total']);
-  const dtK=fk(s,['lastcreated','lasttime','lastdate','createdat','date','time']);
-  return raw.filter(r=>{const n=nK?String(r[nK]||'').trim():'';return n&&n.toLowerCase()!=='total';})
-    .map(r=>({
-      project:nK?String(r[nK]||'').trim():'',
-      open:parseInt(r[oK]||0)||0,dev:parseInt(r[dK]||0)||0,
-      obs:parseInt(r[bK]||0)||0,fixed:parseInt(r[fxK]||0)||0,
-      total:parseInt(r[tK]||0)||0,
-      date:dtK ? parseDate(r[dtK]) : ''   // ← uses smart date parser
-    })).map(r=>{if(!r.total)r.total=r.open+r.dev+r.obs+r.fixed;return r;});
-}
-
-function parseDetail(raw){
-  if(!raw.length)return[];
-  const s=raw[0];
-  const idK=fk(s,['ticketid','ticket','id']);
-  const pjK=fk(s,['projectname','project','name','client']);
-  const prK=fk(s,['priority']);
-  const asK=fk(s,['assignedto','assigned','assignee']);
-  const dtK=fk(s,['developmenttargetdate','targetdate','devtarget']);
-  const dsK=fk(s,['developmentstartdate','startdate','devstart']);
-  const rvK=fk(s,['revieweddate','reviewed','lastreviewed']);
-  const dyK=fk(s,['dayssincereviewed','dayssince','days']);
-  const ovK=fk(s,['isoverdue','overdue']);
-  const asStK=fk(s,['assignedstatus','assignstatus','delaystatus']);
-  const stK=fk(s,['status']);
-  return raw.map(r=>({
-    id:idK?String(r[idK]||''):'',
-    project:pjK?String(r[pjK]||'').trim():'',
-    priority:prK?String(r[prK]||''):'',
-    assignee:asK?String(r[asK]||''):'',
-    devTarget:dtK ? parseDate(r[dtK]) : '',   // ← smart date
-    devStart:dsK  ? parseDate(r[dsK])  : '',   // ← smart date
-    reviewed:rvK  ? parseDate(r[rvK])  : '',   // ← smart date
-    days:parseInt(r[dyK]||0)||0,
-    overdue:ovK?String(r[ovK]||''):'',
-    aStatus:asStK?String(r[asStK]||''):'',
-    status:stK?String(r[stK]||''):''
-  })).filter(r=>r.project);
-}
-
-function parseZero(raw){
-  if(!raw.length)return[];
-  const s=raw[0];
-  const nK=fk(s,['projectname','project','name','client']);
-  const tK=fk(s,['totalticket','total','tickets']);
-  const dtK=fk(s,['lastcreatedtime','lastcreated','lasttime','lastdate','createdat','date','time','last']);
-  const dyK=fk(s,['daysdifference','dayssince','days','diff','dayssincelast']);
-  return raw.filter(r=>{const n=nK?String(r[nK]||'').trim():'';return n&&n.toLowerCase()!=='total';})
-    .map(r=>({
-      project:nK?String(r[nK]||'').trim():'',
-      total:parseInt(r[tK]||0)||0,
-      lastTime:dtK ? parseDate(r[dtK]) : '',   // ← smart date parser fixes serial numbers
-      days:parseInt(r[dyK]||0)||0
-    }));
-}
-
-setupUpload('zone1','file1','status1',raw=>{summaryData=parseSummary(raw);renderTicketSidebar();document.getElementById('dataPanel1').style.display='block';});
-setupUpload('zone2','file2','status2',raw=>{detailData=parseDetail(raw);renderTicketSidebar();document.getElementById('dataPanel1').style.display='block';});
-setupUpload('zone3','file3','status3',raw=>{zeroData=parseZero(raw);renderZeroSidebar();document.getElementById('dataPanel2').style.display='block';});
-
-function renderTicketSidebar(){
-  const tO=summaryData.reduce((s,r)=>s+r.open,0),tD=summaryData.reduce((s,r)=>s+r.dev,0);
-  const tB=summaryData.reduce((s,r)=>s+r.obs,0),tF=summaryData.reduce((s,r)=>s+r.fixed,0);
-  const tA=summaryData.reduce((s,r)=>s+r.total,0);
-  document.getElementById('statsGrid1').innerHTML=`
+function renderTicketSidebar() {
+  const tO = summaryData.reduce((s, r) => s + r.open, 0);
+  const tD = summaryData.reduce((s, r) => s + r.dev, 0);
+  const tB = summaryData.reduce((s, r) => s + r.obs, 0);
+  const tF = summaryData.reduce((s, r) => s + r.fixed, 0);
+  const tA = summaryData.reduce((s, r) => s + r.total, 0);
+  
+  document.getElementById('statsGrid1').innerHTML = `
     <div class="stat-box s-open"><div class="stat-num">${tO}</div><div class="stat-lbl">Open</div></div>
     <div class="stat-box s-dev"><div class="stat-num">${tD}</div><div class="stat-lbl">Under Dev</div></div>
     <div class="stat-box s-obs"><div class="stat-num">${tB}</div><div class="stat-lbl">Under Obs</div></div>
     <div class="stat-box s-fix"><div class="stat-num">${tF}</div><div class="stat-lbl">Dev Fixed</div></div>
     <div class="stat-box s-tot" style="grid-column:span 2"><div class="stat-num">${tA}</div><div class="stat-lbl">Total Tickets</div></div>`;
-  document.getElementById('projList1').innerHTML=summaryData.map(r=>`
+  
+  document.getElementById('projList1').innerHTML = summaryData.map(r => `
     <div class="proj-item"><div class="proj-name">${r.project}</div><div class="proj-badges">
-    ${r.open?`<span class="badge open">${r.open}O</span>`:''}
-    ${r.dev?`<span class="badge dev">${r.dev}D</span>`:''}
-    ${r.obs?`<span class="badge obs">${r.obs}Ob</span>`:''}
-    ${r.fixed?`<span class="badge fix">${r.fixed}F</span>`:''}
+    ${r.open ? `<span class="badge open">${r.open}O</span>` : ''}
+    ${r.dev ? `<span class="badge dev">${r.dev}D</span>` : ''}
+    ${r.obs ? `<span class="badge obs">${r.obs}Ob</span>` : ''}
+    ${r.fixed ? `<span class="badge fix">${r.fixed}F</span>` : ''}
     </div></div>`).join('');
-  const crit=detailData.filter(r=>r.aStatus.toLowerCase().includes('critical')).length;
-  const mod=detailData.filter(r=>r.aStatus.toLowerCase().includes('moderate')).length;
-  const ov=detailData.filter(r=>String(r.overdue).toUpperCase()==='YES').length;
-  document.getElementById('delayStats1').innerHTML=`
+  
+  const crit = detailData.filter(r => r.aStatus.toLowerCase().includes('critical')).length;
+  const mod = detailData.filter(r => r.aStatus.toLowerCase().includes('moderate')).length;
+  const ov = detailData.filter(r => String(r.overdue).toUpperCase() === 'YES').length;
+  
+  document.getElementById('delayStats1').innerHTML = `
     <div class="stat-box s-crit"><div class="stat-num">${crit}</div><div class="stat-lbl">Critical Delay</div></div>
     <div class="stat-box s-over"><div class="stat-num">${mod}</div><div class="stat-lbl">Moderate Delay</div></div>
     <div class="stat-box s-obs" style="grid-column:span 2"><div class="stat-num">${ov}</div><div class="stat-lbl">Overdue</div></div>`;
 }
 
-function renderZeroSidebar(){
-  const total=zeroData.length;
-  const maxDays=zeroData.reduce((m,r)=>Math.max(m,r.days),0);
-  const avgDays=total?Math.round(zeroData.reduce((s,r)=>s+r.days,0)/total):0;
-  document.getElementById('statsGrid2').innerHTML=`
+function renderZeroSidebar() {
+  const total = zeroData.length;
+  const maxDays = zeroData.reduce((m, r) => Math.max(m, r.days), 0);
+  const avgDays = total ? Math.round(zeroData.reduce((s, r) => s + r.days, 0) / total) : 0;
+  
+  document.getElementById('statsGrid2').innerHTML = `
     <div class="stat-box s-zero"><div class="stat-num">${total}</div><div class="stat-lbl">Zero-Call Projects</div></div>
     <div class="stat-box s-days"><div class="stat-num">${maxDays}</div><div class="stat-lbl">Max Days Silent</div></div>
     <div class="stat-box s-over" style="grid-column:span 2"><div class="stat-num">${avgDays}</div><div class="stat-lbl">Avg Days Since Last Call</div></div>`;
-  document.getElementById('projList2').innerHTML=zeroData.map(r=>`
+  
+  document.getElementById('projList2').innerHTML = zeroData.map(r => `
     <div class="proj-item"><div class="proj-name">${r.project}</div><div class="proj-badges">
     <span class="badge days">${r.days}d</span>
-    ${r.total?`<span class="badge obs">${r.total}T</span>`:''}
+    ${r.total ? `<span class="badge obs">${r.total}T</span>` : ''}
     </div></div>`).join('');
 }
 
-function prioC(p){
-  const l=(p||'').toLowerCase();
-  if(l==='critical')return{bg:'#ffe0e0',c:'#b71c1c'};
-  if(l==='high')return{bg:'#fff3e0',c:'#e65100'};
-  if(l==='medium')return{bg:'#fffde7',c:'#f57f17'};
-  return{bg:'#e8f5e9',c:'#2e7d32'};
+function renderDevSidebar() {
+  const total = devData.length;
+  const projects = [...new Set(devData.map(r => r.project))];
+  const crit = devData.filter(r => r.priority.toLowerCase() === 'critical').length;
+  const high = devData.filter(r => r.priority.toLowerCase() === 'high').length;
+  const med = devData.filter(r => r.priority.toLowerCase() === 'medium').length;
+  const low = devData.filter(r => r.priority.toLowerCase() === 'low').length;
+  
+  document.getElementById('statsGrid3').innerHTML = `
+    <div class="stat-box s-teal"><div class="stat-num">${total}</div><div class="stat-lbl">Dev Tickets</div></div>
+    <div class="stat-box s-open"><div class="stat-num">${crit}</div><div class="stat-lbl">Critical</div></div>
+    <div class="stat-box s-over"><div class="stat-num">${high}</div><div class="stat-lbl">High</div></div>
+    <div class="stat-box s-tot" style="grid-column:span 2"><div class="stat-num">${projects.length}</div><div class="stat-lbl">Projects</div></div>`;
+  
+  document.getElementById('projList3').innerHTML = projects.map(p => {
+    const pts = devData.filter(r => r.project === p);
+    const c = pts.filter(r => r.priority.toLowerCase() === 'critical').length;
+    const h = pts.filter(r => r.priority.toLowerCase() === 'high').length;
+    return `<div class="proj-item"><div class="proj-name">${p}</div><div class="proj-badges">
+      <span class="badge teal">${pts.length}T</span>
+      ${c ? `<span class="badge open">${c}C</span>` : ''}
+      ${h ? `<span class="badge dev">${h}H</span>` : ''}
+    </div></div>`;
+  }).join('');
+  
+  document.getElementById('prioStats3').innerHTML = `
+    <div class="stat-box s-crit"><div class="stat-num">${crit}</div><div class="stat-lbl">Critical</div></div>
+    <div class="stat-box s-open"><div class="stat-num">${high}</div><div class="stat-lbl">High</div></div>
+    <div class="stat-box s-dev"><div class="stat-num">${med}</div><div class="stat-lbl">Medium</div></div>
+    <div class="stat-box s-fix"><div class="stat-num">${low}</div><div class="stat-lbl">Low</div></div>`;
 }
-function statC(s){
-  const l=(s||'').toLowerCase();
-  if(l.includes('critical'))return{bg:'#ffeaea',c:'#c0392b'};
-  if(l.includes('moderate'))return{bg:'#fff8e1',c:'#b8860b'};
-  return{bg:'#e8f4ff',c:'#1565c0'};
+
+function renderObsSidebar() {
+  const total = obsData.length;
+  const projects = [...new Set(obsData.map(r => r.project))];
+  const crit = obsData.filter(r => (r.priority || '').toLowerCase() === 'critical').length;
+  const high = obsData.filter(r => (r.priority || '').toLowerCase() === 'high').length;
+  const med = obsData.filter(r => (r.priority || '').toLowerCase() === 'medium').length;
+  const low = obsData.filter(r => (r.priority || '').toLowerCase() === 'low').length;
+  
+  document.getElementById('statsGrid4').innerHTML = `
+    <div class="stat-box s-purple"><div class="stat-num">${total}</div><div class="stat-lbl">Obs Tickets</div></div>
+    <div class="stat-box s-open"><div class="stat-num">${crit}</div><div class="stat-lbl">Critical</div></div>
+    <div class="stat-box s-over"><div class="stat-num">${high}</div><div class="stat-lbl">High</div></div>
+    <div class="stat-box s-tot" style="grid-column:span 2"><div class="stat-num">${projects.length}</div><div class="stat-lbl">Projects</div></div>`;
+  
+  document.getElementById('projList4').innerHTML = projects.map(p => {
+    const pts = obsData.filter(r => r.project === p);
+    const c = pts.filter(r => (r.priority || '').toLowerCase() === 'critical').length;
+    const h = pts.filter(r => (r.priority || '').toLowerCase() === 'high').length;
+    return `<div class="proj-item"><div class="proj-name">${p}</div><div class="proj-badges">
+      <span class="badge purple">${pts.length}T</span>
+      ${c ? `<span class="badge open">${c}C</span>` : ''}
+      ${h ? `<span class="badge dev">${h}H</span>` : ''}
+    </div></div>`;
+  }).join('');
+  
+  document.getElementById('obsStats4').innerHTML = `
+    <div class="stat-box s-crit"><div class="stat-num">${crit}</div><div class="stat-lbl">Critical</div></div>
+    <div class="stat-box s-open"><div class="stat-num">${high}</div><div class="stat-lbl">High</div></div>
+    <div class="stat-box s-dev"><div class="stat-num">${med}</div><div class="stat-lbl">Medium</div></div>
+    <div class="stat-box s-fix"><div class="stat-num">${low}</div><div class="stat-lbl">Low</div></div>`;
 }
-function dC(d){return d>45?'#b71c1c':d>30?'#c0392b':d>14?'#b8860b':'#2e7d32';}
-function dBg(d){return d>45?'#ffeaea':d>30?'#fff3e0':d>14?'#fffde7':'#e8f5e9';}
 
-// ========== NEW SIGNATURE with logo + only corporate address ==========
+// ============================================
+// COLOR HELPER FUNCTIONS
+// ============================================
 
-const SIG=`<tr><td style="font-size:0;line-height:0;height:4px;padding:0;">
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-<tr>
+function prioC(p) {
+  const l = (p || '').toLowerCase();
+  if (l === 'critical') return { bg: '#ffe0e0', c: '#b71c1c' };
+  if (l === 'high') return { bg: '#fff3e0', c: '#e65100' };
+  if (l === 'medium') return { bg: '#fffde7', c: '#f57f17' };
+  return { bg: '#e8f5e9', c: '#2e7d32' };
+}
+
+function statC(s) {
+  const l = (s || '').toLowerCase();
+  if (l.includes('critical')) return { bg: '#ffeaea', c: '#c0392b' };
+  if (l.includes('moderate')) return { bg: '#fff8e1', c: '#b8860b' };
+  return { bg: '#e8f4ff', c: '#1565c0' };
+}
+
+function dCObs(d) { return d > 20 ? '#b71c1c' : d > 7 ? '#b8860b' : '#2e7d32'; }
+function dBgObs(d) { return d > 20 ? '#ffeaea' : d > 7 ? '#fffde7' : '#e8f5e9'; }
+function dCZero(d) { return d > 45 ? '#b71c1c' : d > 30 ? '#c0392b' : d > 14 ? '#b8860b' : '#2e7d32'; }
+function dBgZero(d) { return d > 45 ? '#ffeaea' : d > 30 ? '#fff3e0' : d > 14 ? '#fffde7' : '#e8f5e9'; }
+
+// Days color for observation based on modified date
+function getDaysColor(days) {
+  if (days === null) return { bg: '#f0f0f0', c: '#999999' };
+  if (days > 14) return { bg: '#ffeaea', c: '#b71c1c' };
+  if (days > 7) return { bg: '#fff3e0', c: '#e65100' };
+  if (days > 3) return { bg: '#fffde7', c: '#f57f17' };
+  return { bg: '#e8f5e9', c: '#2e7d32' };
+}
+
+// ============================================
+// SIGNATURE AND WRAPPER
+// ============================================
+
+const SIG = `<tr><td style="font-size:0;line-height:0;height:4px;padding:0;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
 <td width="45%" style="background-color:#1a6abf;font-size:0;line-height:0;height:4px;">&#8203;</td>
 <td style="background-color:#0a1628;font-size:0;line-height:0;height:4px;">&#8203;</td>
-</tr>
-</table>
-</td></tr>
-
-<tr>
-<td style="background-color:#daeeff;padding:20px 48px;">
+</tr></table></td></tr>
+<tr><td style="background-color:#daeeff;padding:20px 48px;">
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-
-<tr>
-<td style="font-size:18px;font-weight:bold;color:#0a1628;margin:0;font-family:Arial,sans-serif;">
-GNANATHIRUMALVASAN P
-</td>
-</tr>
-
-<tr>
-<td style="font-size:11px;font-weight:600;color:#1a6abf;letter-spacing:1.2px;text-transform:uppercase;margin:0 0 8px 0;font-family:Arial,sans-serif;">
-Software Quality Analyst
-</td>
-</tr>
-
-<tr>
-<td style="color:#1a6abf;font-size:13px;font-family:Arial,sans-serif;padding-top:6px;">
-📞 +91 93452 30581
-</td>
-</tr>
-
-<tr>
-<td style="color:#0a1628;font-size:13px;font-family:Arial,sans-serif;padding-top:4px;">
-✉️ gnanathirumalvasan@craftsmanautomation.com
-</td>
-</tr>
-
-<tr>
-<td style="padding-top:14px;">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzZwhi3IvuXHkUpoJECdO1VlvDK4Ub6rQlqg&s"
-alt="Craftsman Automation"
-width="120"
-style="display:block;border-radius:6px;">
-</td>
-</tr>
-
-<tr>
-<td style="padding-top:12px;">
-<hr style="border:0;border-top:1px solid #b8cfe8;margin:0 0 12px 0;">
-</td>
-</tr>
-
-<tr>
-<td style="font-size:11px;color:#3a5068;font-family:Arial,sans-serif;line-height:1.7;">
-<strong style="color:#0a1628;">Corporate Office:</strong>
-No.1087, 5th Floor, Krishna Towers, Avinashi Road, Coimbatore – 641 037, Tamil Nadu, India.<br>
+<tr><td style="font-size:18px;font-weight:bold;color:#0a1628;font-family:Arial,sans-serif;">GNANATHIRUMALVASAN P</td></tr>
+<tr><td style="font-size:11px;font-weight:600;color:#1a6abf;letter-spacing:1.2px;text-transform:uppercase;font-family:Arial,sans-serif;">Software Quality Analyst</td></tr>
+<tr><td style="color:#1a6abf;font-size:13px;font-family:Arial,sans-serif;padding-top:6px;">📞 +91 93452 30581</td></tr>
+<tr><td style="color:#0a1628;font-size:13px;font-family:Arial,sans-serif;padding-top:4px;">✉️ gnanathirumalvasan@craftsmanautomation.com</td></tr>
+<tr><td style="padding-top:14px;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzZwhi3IvuXHkUpoJECdO1VlvDK4Ub6rQlqg&s" alt="Craftsman Automation" width="120" style="display:block;border-radius:6px;"></td></tr>
+<tr><td style="padding-top:12px;"><hr style="border:0;border-top:1px solid #b8cfe8;margin:0 0 12px 0;"></td></tr>
+<tr><td style="font-size:11px;color:#3a5068;font-family:Arial,sans-serif;line-height:1.7;">
+<strong style="color:#0a1628;">Corporate Office:</strong> No.1087, 5th Floor, Krishna Towers, Avinashi Road, Coimbatore – 641 037, Tamil Nadu, India.<br>
 <span style="color:#1a6abf;">www.craftsmanautomation.com</span> | www.craftsmanstorage.com
-</td>
-</tr>
+</td></tr>
+</table></td></tr>`;
 
-</table>
-</td>
-</tr>
-
-`;
-
-function wrap(body){
-  return`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+function wrap(body, includeSignature = true) {
+  if (!includeSignature) {
+    return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#ffffff;width:100%;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#ffffff;">
+<tr><td align="center" valign="top"><table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;width:100%;">
+<tr><td style="background-color:#fff;padding:0;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr><td style="padding:38px 48px 30px;">${body}</td></tr>
+</table></td></tr>
+</table></td></tr></table></body></html>`;
+  }
+  
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
 <body style="margin:0;padding:0;background-color:#ffffff;width:100%;">
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#ffffff;">
 <tr><td align="center" valign="top"><table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;width:100%;">
@@ -646,172 +975,489 @@ function wrap(body){
 </table></td></tr></table></body></html>`;
 }
 
-function generateTicketEmail(){
-  if(!summaryData.length){alert('Please upload the Summary Report (File 1) first.');return;}
-  const today=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-  const tO=summaryData.reduce((s,r)=>s+r.open,0),tD=summaryData.reduce((s,r)=>s+r.dev,0);
-  const tB=summaryData.reduce((s,r)=>s+r.obs,0),tF=summaryData.reduce((s,r)=>s+r.fixed,0);
-  const tA=summaryData.reduce((s,r)=>s+r.total,0);
+// ============================================
+// PREVIEW TAB SWITCH (Tab 1 only)
+// ============================================
 
-  const sRows=summaryData.map((r,i)=>`
-<tr style="background-color:${i%2===0?'#fff':'#f7faff'};">
+function switchPreviewTab(n) {
+  activePTab = n;
+  document.getElementById('ptab1').className = 'tab-btn' + (n === 1 ? ' active' : '');
+  document.getElementById('ptab2').className = 'tab-btn' + (n === 2 ? ' active' : '');
+  if (ticketHTML[n - 1]) document.getElementById('emailPreview1').innerHTML = `<div class="email-shell">${ticketHTML[n - 1]}</div>`;
+}
+
+// ============================================
+// GENERATE FUNCTIONS
+// ============================================
+
+// Ticket Reminder (Tab 1)
+function generateTicketEmail() {
+  if (!summaryData.length) {
+    alert('Please upload the Summary Report (File 1) first.');
+    return;
+  }
+  
+  const includeSignature = document.getElementById('signature1').checked;
+  const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  const tO = summaryData.reduce((s, r) => s + r.open, 0);
+  const tD = summaryData.reduce((s, r) => s + r.dev, 0);
+  const tB = summaryData.reduce((s, r) => s + r.obs, 0);
+  const tF = summaryData.reduce((s, r) => s + r.fixed, 0);
+  const tA = summaryData.reduce((s, r) => s + r.total, 0);
+  
+  const sRows = summaryData.map((r, i) => `
+<tr style="background-color:${i % 2 === 0 ? '#fff' : '#f7faff'};">
 <td style="padding:9px 12px;font-size:12px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #e8f0f8;">${r.project}</td>
-<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;">${r.open?`<span style="background:#ffeaea;color:#c0392b;font-weight:700;padding:2px 8px;border-radius:12px;font-size:11px;">${r.open}</span>`:'<span style="color:#bbb;">—</span>'}</td>
-<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;">${r.dev?`<span style="background:#fff8e1;color:#b8860b;font-weight:700;padding:2px 8px;border-radius:12px;font-size:11px;">${r.dev}</span>`:'<span style="color:#bbb;">—</span>'}</td>
-<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;">${r.obs?`<span style="background:#e8f4ff;color:#1565c0;font-weight:700;padding:2px 8px;border-radius:12px;font-size:11px;">${r.obs}</span>`:'<span style="color:#bbb;">—</span>'}</td>
-<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;">${r.fixed?`<span style="background:#e8f8ee;color:#1b7a34;font-weight:700;padding:2px 8px;border-radius:12px;font-size:11px;">${r.fixed}</span>`:'<span style="color:#bbb;">—</span>'}</td>
+<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;">${r.open ? `<span style="background:#ffeaea;color:#c0392b;font-weight:700;padding:2px 8px;border-radius:12px;font-size:11px;">${r.open}</span>` : '<span style="color:#bbb;">—</span>'}</td>
+<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;">${r.dev ? `<span style="background:#fff8e1;color:#b8860b;font-weight:700;padding:2px 8px;border-radius:12px;font-size:11px;">${r.dev}</span>` : '<span style="color:#bbb;">—</span>'}</td>
+<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;">${r.obs ? `<span style="background:#e8f4ff;color:#1565c0;font-weight:700;padding:2px 8px;border-radius:12px;font-size:11px;">${r.obs}</span>` : '<span style="color:#bbb;">—</span>'}</td>
+<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;">${r.fixed ? `<span style="background:#e8f8ee;color:#1b7a34;font-weight:700;padding:2px 8px;border-radius:12px;font-size:11px;">${r.fixed}</span>` : '<span style="color:#bbb;">—</span>'}</td>
 <td style="padding:9px 12px;text-align:center;font-weight:700;color:#0a1628;font-size:12px;font-family:Arial,sans-serif;border-bottom:1px solid #e8f0f8;">${r.total}</td>
-<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;font-size:11px;color:#6b7a8d;font-family:Arial,sans-serif;">${r.date||'—'}</td>
+<td style="padding:9px 12px;text-align:center;border-bottom:1px solid #e8f0f8;font-size:11px;color:#6b7a8d;font-family:Arial,sans-serif;">${r.date || '—'}</td>
 </tr>`).join('');
-
-  const dRows=detailData.map((r,i)=>{
-    const pc=prioC(r.priority),sc=statC(r.aStatus);
-    return`<tr style="background-color:${i%2===0?'#fff':'#f7faff'};">
+  
+  const dRows = detailData.map((r, i) => {
+    const pc = prioC(r.priority);
+    const sc = statC(r.aStatus);
+    return `<tr style="background-color:${i % 2 === 0 ? '#fff' : '#f7faff'};">
 <td style="padding:8px 10px;font-size:11px;font-family:Arial,sans-serif;color:#1a6abf;font-weight:700;border-bottom:1px solid #e8f0f8;">#${r.id}</td>
 <td style="padding:8px 10px;font-size:11px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #e8f0f8;">${r.project}</td>
 <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8f0f8;"><span style="background:${pc.bg};color:${pc.c};font-weight:700;padding:2px 8px;border-radius:12px;font-size:10px;">${r.priority}</span></td>
 <td style="padding:8px 10px;font-size:11px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #e8f0f8;">${r.assignee}</td>
-<td style="padding:8px 10px;text-align:center;font-size:12px;font-weight:700;border-bottom:1px solid #e8f0f8;font-family:Arial,sans-serif;color:${r.days>20?'#c0392b':r.days>7?'#b8860b':'#1b7a34'};">${r.days}d</td>
-<td style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8f0f8;"><span style="background:${sc.bg};color:${sc.c};font-weight:700;padding:2px 8px;border-radius:12px;font-size:10px;">${r.aStatus||'—'}</span></td>
+<td style="padding:8px 10px;text-align:center;font-size:12px;font-weight:700;border-bottom:1px solid #e8f0f8;font-family:Arial,sans-serif;color:${r.days > 20 ? '#c0392b' : r.days > 7 ? '#b8860b' : '#1b7a34'};">${r.days}d</td>
+<td style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8f0f8;"><span style="background:${sc.bg};color:${sc.c};font-weight:700;padding:2px 8px;border-radius:12px;font-size:10px;">${r.aStatus || '—'}</span></td>
 <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8f0f8;"><span style="background:#e8f4ff;color:#1565c0;font-weight:700;padding:2px 8px;border-radius:12px;font-size:10px;">${r.status}</span></td>
-</tr>`;}).join('');
-
-  const common=`
+</tr>`;
+  }).join('');
+  
+  const common = `
 <p style="font-size:13px;font-weight:bold;color:#0a1628;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Dear Team,</p>
 <p style="font-size:13px;line-height:1.85;color:#2c3e50;margin:0 0 12px 0;font-family:Calibri,Arial,sans-serif;">Kindly refer the details below for the current Zoho Ticket status <strong style="color:#c0392b;">"Under Observation"</strong>, <strong style="color:#b8860b;">"Development Open"</strong> and <strong style="color:#1565c0;">"Under Development"</strong> categories.</p>
-<p style="font-size:13px;font-weight:700;color:#0a1628;margin:20px 0 10px 0;font-family:Calibri,Arial,sans-serif;">Status Details:</p>
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:10px;"><tr>
-<td style="background:#ffeaea;border-left:4px solid #c0392b;border-radius:0 6px 6px 0;padding:10px 14px;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:10px;"><tr><td style="background:#ffeaea;border-left:4px solid #c0392b;border-radius:0 6px 6px 0;padding:10px 14px;">
 <p style="font-size:12px;font-weight:700;color:#c0392b;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">🔴 Open</p>
 <p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">All tickets under Open Status are assigned to the Development Team. Assigned members are requested to change the status to <strong>In Progress</strong> and update the <strong>Development Target Date</strong> in Zoho Desk ASAP.</p>
 </td></tr></table>
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;"><tr>
-<td style="background:#fff8e1;border-left:4px solid #b8860b;border-radius:0 6px 6px 0;padding:10px 14px;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;"><tr><td style="background:#fff8e1;border-left:4px solid #b8860b;border-radius:0 6px 6px 0;padding:10px 14px;">
 <p style="font-size:12px;font-weight:700;color:#b8860b;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">🟡 Development Fixed</p>
 <p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">Ensure the development solution is updated clearly with proper content. Mention related file names and attach necessary Documents / Screenshots for better clarity.</p>
 </td></tr></table>
 <p style="font-size:13px;font-weight:700;color:#0a1628;margin:24px 0 10px 0;font-family:Calibri,Arial,sans-serif;">📊 Ticket Status Summary — ${today}</p>
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:8px;overflow:hidden;border:1px solid #dde8f5;">
-<thead><tr style="background:#000000;"> <!-- black header with white text -->
-<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:left;font-weight:700;">Project Name</th>
-<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Open</th>
-<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Under Development</th>
-<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Under Observation</th>
-<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Development Fixed</th>
-<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Total</th>
-<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Last Created</th>
+<thead><tr style="background:#000000;">
+<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project Name</th>
+<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Open</th>
+<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Under Development</th>
+<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Under Observation</th>
+<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Development Fixed</th>
+<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Total</th>
+<th style="padding:10px 12px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Last Created</th>
 </tr></thead>
 <tbody>${sRows}
 <tr style="background:#000000;">
-<td style="padding:10px 12px;font-size:12px;font-family:Arial,sans-serif;color:#ffffff;font-weight:700;">TOTAL</td>
-<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#ffffff;font-family:Arial,sans-serif;">${tO}</td>
-<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#ffffff;font-family:Arial,sans-serif;">${tD}</td>
-<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#ffffff;font-family:Arial,sans-serif;">${tB}</td>
-<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#ffffff;font-family:Arial,sans-serif;">${tF}</td>
-<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#ffffff;font-family:Arial,sans-serif;">${tA}</td>
-<td style="padding:10px 12px;text-align:center;color:#ffffff;">—</td>
+<td style="padding:10px 12px;font-size:12px;font-family:Arial,sans-serif;color:#fff;font-weight:700;">TOTAL</td>
+<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#fff;font-family:Arial,sans-serif;">${tO}</td>
+<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#fff;font-family:Arial,sans-serif;">${tD}</td>
+<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#fff;font-family:Arial,sans-serif;">${tB}</td>
+<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#fff;font-family:Arial,sans-serif;">${tF}</td>
+<td style="padding:10px 12px;text-align:center;font-size:13px;font-weight:800;color:#fff;font-family:Arial,sans-serif;">${tA}</td>
+<td style="padding:10px 12px;text-align:center;color:#fff;">—</td>
 </tr></tbody></table>`;
-
-  const detail=detailData.length?`
+  
+  const detail = detailData.length ? `
 <p style="font-size:13px;font-weight:700;color:#0a1628;margin:28px 0 12px 0;font-family:Calibri,Arial,sans-serif;">🔍 Detailed Ticket Report — ${today}</p>
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:8px;overflow:hidden;border:1px solid #dde8f5;">
-<thead><tr style="background:#000000;"> <!-- black header -->
-<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:left;font-weight:700;">#</th>
-<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:left;font-weight:700;">Project</th>
-<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Priority</th>
-<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:left;font-weight:700;">Assigned To</th>
-<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Days</th>
-<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Delay Status</th>
-<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;">Status</th>
+<thead><tr style="background:#000000;">
+<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">#</th>
+<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project</th>
+<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Priority</th>
+<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Assigned To</th>
+<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Days</th>
+<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Delay Status</th>
+<th style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Status</th>
 </tr></thead>
-<tbody>${dRows}</tbody></table>`:'';
-
-  const footer=`<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:26px;"><tr><td style="border-top:1px dashed #c2d8ef;font-size:0;line-height:0;height:1px;">&#8203;</td></tr></table>
+<tbody>${dRows}</tbody></table>` : '';
+  
+  const footer = `<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:26px;"><tr><td style="border-top:1px dashed #c2d8ef;font-size:0;line-height:0;height:1px;">&#8203;</td></tr></table>
 <p style="font-size:11px;color:#9ab0c5;font-style:italic;margin:12px 0 0 0;font-family:Calibri,Arial,sans-serif;">Please feel free to reach out if you have any questions or need further details.</p>`;
-
-  ticketHTML[0]=wrap(common+footer);
-  ticketHTML[1]=wrap(common+detail+footer);
-  document.getElementById('tabBar1').style.display='flex';
-  document.getElementById('emailPreview1').innerHTML=`<div class="email-shell">${ticketHTML[0]}</div>`;
-  activePTab=1;
-  document.getElementById('ptab1').className='tab-btn active';
-  document.getElementById('ptab2').className='tab-btn';
-  ['copyBtn1','dlBtn1','printBtn1','outlookBtn1'].forEach(id=>document.getElementById(id).disabled=false);
-  showToast('✅ Ticket reminder email generated!','#2ea043');
+  
+  ticketHTML[0] = wrap(common + footer, includeSignature);
+  ticketHTML[1] = wrap(common + detail + footer, includeSignature);
+  
+  document.getElementById('tabBar1').style.display = 'flex';
+  document.getElementById('emailPreview1').innerHTML = `<div class="email-shell">${ticketHTML[0]}</div>`;
+  activePTab = 1;
+  document.getElementById('ptab1').className = 'tab-btn active';
+  document.getElementById('ptab2').className = 'tab-btn';
+  
+  ['copyBtn1', 'dlBtn1', 'printBtn1', 'outlookBtn1'].forEach(id => document.getElementById(id).disabled = false);
+  showToast('✅ Ticket reminder email generated!', '#2ea043');
 }
 
-function generateZeroEmail(){
-  if(!zeroData.length){alert('Please upload the Zero Support Calls file first.');return;}
-  const today=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-  const total=zeroData.length;
-  const maxD=zeroData.reduce((m,r)=>Math.max(m,r.days),0);
-  const avgD=Math.round(zeroData.reduce((s,r)=>s+r.days,0)/total);
-
-  const rows=zeroData.map((r,i)=>`
-<tr style="background-color:${i%2===0?'#fff':'#fdf8f4'};">
+// Zero Calls (Tab 2)
+function generateZeroEmail() {
+  if (!zeroData.length) {
+    alert('Please upload the Zero Support Calls file first.');
+    return;
+  }
+  
+  const includeSignature = document.getElementById('signature2').checked;
+  const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  const total = zeroData.length;
+  const maxD = zeroData.reduce((m, r) => Math.max(m, r.days), 0);
+  const avgD = Math.round(zeroData.reduce((s, r) => s + r.days, 0) / total);
+  
+  const rows = zeroData.map((r, i) => `
+<tr style="background-color:${i % 2 === 0 ? '#fff' : '#fdf8f4'};">
 <td style="padding:10px 14px;font-size:12px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #f0e8e0;">${r.project}</td>
-<td style="padding:10px 14px;text-align:center;border-bottom:1px solid #f0e8e0;font-size:12px;font-family:Arial,sans-serif;font-weight:700;color:#0a1628;">${r.total||'—'}</td>
-<td style="padding:10px 14px;text-align:center;border-bottom:1px solid #f0e8e0;font-size:11px;color:#6b7a8d;font-family:Arial,sans-serif;">${r.lastTime||'—'}</td>
-<td style="padding:10px 14px;text-align:center;border-bottom:1px solid #f0e8e0;"><span style="background:${dBg(r.days)};color:${dC(r.days)};font-weight:800;padding:3px 10px;border-radius:12px;font-size:12px;font-family:Arial,sans-serif;">${r.days} days</span></td>
+<td style="padding:10px 14px;text-align:center;border-bottom:1px solid #f0e8e0;font-size:12px;font-family:Arial,sans-serif;font-weight:700;color:#0a1628;">${r.total || '—'}</td>
+<td style="padding:10px 14px;text-align:center;border-bottom:1px solid #f0e8e0;font-size:11px;color:#6b7a8d;font-family:Arial,sans-serif;">${r.lastTime || '—'}</td>
+<td style="padding:10px 14px;text-align:center;border-bottom:1px solid #f0e8e0;"><span style="background:${dBgZero(r.days)};color:${dCZero(r.days)};font-weight:800;padding:3px 10px;border-radius:12px;font-size:12px;font-family:Arial,sans-serif;">${r.days} days</span></td>
 </tr>`).join('');
-
-  const body=`
+  
+  const body = `
 <p style="font-size:13px;font-weight:bold;color:#0a1628;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Dear Team,</p>
-<p style="font-size:13px;line-height:1.85;color:#2c3e50;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Please find below the list of projects that have recorded <strong style="color:#e8793a;">zero support calls</strong> for an extended period. The details include the last ticket created time and the number of days since the last support call was received.</p>
+<p style="font-size:13px;line-height:1.85;color:#2c3e50;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Please find below the list of projects that have recorded <strong style="color:#e8793a;">zero support calls</strong> for an extended period.</p>
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:22px;"><tr>
 <td style="background:#fff4ee;border-left:4px solid #e8793a;border-radius:0 6px 6px 0;padding:12px 16px;">
 <p style="font-size:12px;font-weight:700;color:#e8793a;margin:0 0 4px 0;font-family:Calibri,Arial,sans-serif;">📴 Action Required</p>
-<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.7;font-family:Calibri,Arial,sans-serif;">The projects listed below have had <strong>no support activity</strong> for a significant period. Kindly review and take necessary follow-up actions — reach out to the respective clients to check their system status and ensure everything is functioning properly.</p>
+<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.7;font-family:Calibri,Arial,sans-serif;">The projects listed below have had <strong>no support activity</strong> for a significant period. Kindly review and take necessary follow-up actions.</p>
 </td></tr></table>
-<p style="font-size:13px;font-weight:700;color:#0a1628;margin:0 0 8px 0;font-family:Calibri,Arial,sans-serif;">📋 Weekly Projects with Zero Support Calls — Summary Update</p>
-<p style="font-size:11px;color:#6b7a8d;margin:0 0 14px 0;font-family:Calibri,Arial,sans-serif;">Report Date: <strong style="color:#0a1628;">${today}</strong> &nbsp;|&nbsp; Total: <strong style="color:#e8793a;">${total} projects</strong> &nbsp;|&nbsp; Longest silence: <strong style="color:#c0392b;">${maxD} days</strong> &nbsp;|&nbsp; Average: <strong style="color:#b8860b;">${avgD} days</strong></p>
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:0 0 8px 0;font-family:Calibri,Arial,sans-serif;">📋 Weekly Projects with Zero Support Calls — ${today}</p>
+<p style="font-size:11px;color:#6b7a8d;margin:0 0 14px 0;font-family:Calibri,Arial,sans-serif;">Total: <strong style="color:#e8793a;">${total} projects</strong> &nbsp;|&nbsp; Longest: <strong style="color:#c0392b;">${maxD} days</strong> &nbsp;|&nbsp; Average: <strong style="color:#b8860b;">${avgD} days</strong></p>
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:8px;overflow:hidden;border:1px solid #f0e0d0;">
-<thead><tr style="background:#000000;"> <!-- black header zero calls -->
-<th style="padding:11px 14px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:left;font-weight:700;letter-spacing:0.5px;">Project Name</th>
-<th style="padding:11px 14px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;letter-spacing:0.5px;">Total Tickets</th>
-<th style="padding:11px 14px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;letter-spacing:0.5px;">Last Created Time</th>
-<th style="padding:11px 14px;font-size:10px;font-family:Arial,sans-serif;color:#ffffff;text-align:center;font-weight:700;letter-spacing:0.5px;">Days Difference</th>
+<thead><tr style="background:#000000;">
+<th style="padding:11px 14px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project Name</th>
+<th style="padding:11px 14px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Total Tickets</th>
+<th style="padding:11px 14px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Last Created Time</th>
+<th style="padding:11px 14px;font-size:10px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Days Difference</th>
 </tr></thead>
 <tbody>${rows}</tbody></table>
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:26px;"><tr><td style="border-top:1px dashed #f0e0d0;font-size:0;line-height:0;height:1px;">&#8203;</td></tr></table>
 <p style="font-size:11px;color:#9ab0c5;font-style:italic;margin:12px 0 0 0;font-family:Calibri,Arial,sans-serif;">Please feel free to reach out if you have any questions or need further details.</p>`;
-
-  zeroHTML=wrap(body);
-  document.getElementById('emailPreview2').innerHTML=`<div class="email-shell">${zeroHTML}</div>`;
-  ['copyBtn2','dlBtn2','printBtn2','outlookBtn2'].forEach(id=>document.getElementById(id).disabled=false);
-  showToast('✅ Zero Calls email generated!','#e8793a');
+  
+  zeroHTML = wrap(body, includeSignature);
+  document.getElementById('emailPreview2').innerHTML = `<div class="email-shell">${zeroHTML}</div>`;
+  
+  ['copyBtn2', 'dlBtn2', 'printBtn2', 'outlookBtn2'].forEach(id => document.getElementById(id).disabled = false);
+  showToast('✅ Zero Calls email generated!', '#e8793a');
 }
 
-function switchPreviewTab(n){
-  activePTab=n;
-  document.getElementById('ptab1').className='tab-btn'+(n===1?' active':'');
-  document.getElementById('ptab2').className='tab-btn'+(n===2?' active':'');
-  if(ticketHTML[n-1])document.getElementById('emailPreview1').innerHTML=`<div class="email-shell">${ticketHTML[n-1]}</div>`;
+// Under Development (Tab 3)
+function generateDevEmail() {
+  if (!devData.length) {
+    alert('Please upload the Under Development report first.');
+    return;
+  }
+  
+  const includeSignature = document.getElementById('signature3').checked;
+  const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  const total = devData.length;
+  const projects = [...new Set(devData.map(r => r.project))];
+  const crit = devData.filter(r => r.priority.toLowerCase() === 'critical').length;
+  const high = devData.filter(r => r.priority.toLowerCase() === 'high').length;
+  
+  const projSummary = projects.map(p => {
+    const pts = devData.filter(r => r.project === p);
+    const c = pts.filter(r => r.priority.toLowerCase() === 'critical').length;
+    const h = pts.filter(r => r.priority.toLowerCase() === 'high').length;
+    return `<tr>
+<td style="padding:8px 12px;font-size:12px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #d8f0f2;">${p}</td>
+<td style="padding:8px 12px;text-align:center;font-size:12px;font-weight:700;color:#0a1628;font-family:Arial,sans-serif;border-bottom:1px solid #d8f0f2;">${pts.length}</td>
+<td style="padding:8px 12px;text-align:center;border-bottom:1px solid #d8f0f2;">${c ? `<span style="background:#ffeaea;color:#b71c1c;font-weight:700;padding:2px 7px;border-radius:10px;font-size:10px;">${c} Critical</span>` : '<span style="color:#bbb;font-size:11px;">—</span>'}</td>
+<td style="padding:8px 12px;text-align:center;border-bottom:1px solid #d8f0f2;">${h ? `<span style="background:#fff3e0;color:#e65100;font-weight:700;padding:2px 7px;border-radius:10px;font-size:10px;">${h} High</span>` : '<span style="color:#bbb;font-size:11px;">—</span>'}</td>
+</tr>`;
+  }).join('');
+  
+  const detRows = devData.map((r, i) => {
+    const pc = prioC(r.priority);
+    const hasSolution = r.devSolution && r.devSolution !== '—';
+    const hasResolution = r.resolution && r.resolution !== '—';
+    
+    // Display full data without truncation
+    return `<tr style="background-color:${i % 2 === 0 ? '#fff' : '#f0fbfc'};">
+<td style="padding:9px 10px;font-size:11px;font-family:Arial,sans-serif;color:#0e9aa7;font-weight:700;border-bottom:1px solid #d8f0f2;white-space:nowrap;">#${r.id || '—'}</td>
+<td style="padding:9px 10px;font-size:11px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #d8f0f2;">${r.project}</td>
+<td style="padding:9px 10px;text-align:center;border-bottom:1px solid #d8f0f2;"><span style="background:${pc.bg};color:${pc.c};font-weight:700;padding:2px 7px;border-radius:10px;font-size:10px;">${r.priority || '—'}</span></td>
+<td style="padding:9px 10px;font-size:11px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #d8f0f2;">${r.createdBy || '—'}</td>
+<td style="padding:9px 10px;font-size:11px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #d8f0f2;">${r.assignee || '—'}</td>
+<td style="padding:9px 10px;font-size:11px;font-family:Arial,sans-serif;color:#1a2a3a;border-bottom:1px solid #d8f0f2;word-wrap:break-word;white-space:normal;">${r.subject || '—'}</td>
+<td style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#5a6a7a;border-bottom:1px solid #d8f0f2;word-wrap:break-word;white-space:normal;">${r.desc || '—'}</td>
+<td style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#5a6a7a;border-bottom:1px solid #d8f0f2;word-wrap:break-word;white-space:normal;">${r.resolution || '—'}</td>
+<td style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;border-bottom:1px solid #d8f0f2;word-wrap:break-word;white-space:normal;">
+  ${hasSolution ? `<span style="color:#076870;font-weight:600;">${r.devSolution}</span>` : '<span style="color:#bbb;">—</span>'}
+</td>
+<td style="padding:9px 10px;text-align:center;border-bottom:1px solid #d8f0f2;"><span style="background:#e0f7fa;color:#006064;font-weight:700;padding:2px 7px;border-radius:10px;font-size:10px;white-space:nowrap;">${r.status || 'Under Development'}</span></td>
+<td style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#6b7a8d;border-bottom:1px solid #d8f0f2;white-space:nowrap;">${r.createdTime || '—'}</td>
+<td style="padding:9px 10px;font-size:10px;font-family:Arial,sans-serif;color:#6b7a8d;border-bottom:1px solid #d8f0f2;white-space:nowrap;">${r.modifiedTime || '—'}</td>
+</tr>`;
+  }).join('');
+  
+  const body = `
+<p style="font-size:13px;font-weight:bold;color:#0a1628;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Dear Team,</p>
+<p style="font-size:13px;line-height:1.85;color:#2c3e50;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Please find below the detailed status report of all tickets currently <strong style="color:#0e9aa7;">"Under Development"</strong>. Kindly review your assigned tickets, update progress notes, and ensure all target dates are met promptly.</p>
+
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:10px;"><tr>
+<td style="background:#e0f7fa;border-left:4px solid #0e9aa7;border-radius:0 6px 6px 0;padding:10px 14px;">
+<p style="font-size:12px;font-weight:700;color:#006064;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">🛠 Under Development — Action Points</p>
+<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">All assigned developers are requested to <strong>update the Developer Solution field</strong> in Zoho Desk with clear resolution notes, related file names, and screenshots where applicable. Once fixed, update the status to <strong>"Development Fixed"</strong> immediately.</p>
+</td></tr></table>
+
+${crit > 0 ? `<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:18px;margin-top:8px;"><tr>
+<td style="background:#fff0f0;border-left:4px solid #c0392b;border-radius:0 6px 6px 0;padding:10px 14px;">
+<p style="font-size:12px;font-weight:700;color:#c0392b;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">⚠ Critical Priority Alert — ${crit} ticket${crit > 1 ? 's' : ''} require immediate attention</p>
+<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">There ${crit > 1 ? 'are' : 'is'} <strong>${crit} Critical priority ticket${crit > 1 ? 's' : ''}</strong> currently under development. Please prioritise these immediately and provide an update on the expected resolution timeline.</p>
+</td></tr></table>` : ''}
+
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:20px 0 8px 0;font-family:Calibri,Arial,sans-serif;">📋 Project-wise Summary</p>
+<p style="font-size:11px;color:#6b7a8d;margin:0 0 10px 0;font-family:Calibri,Arial,sans-serif;">Report Date: <strong style="color:#0a1628;">${today}</strong> &nbsp;|&nbsp; Total Under Development: <strong style="color:#0e9aa7;">${total} tickets</strong> &nbsp;|&nbsp; Projects: <strong style="color:#0a1628;">${projects.length}</strong> &nbsp;|&nbsp; Critical: <strong style="color:#c0392b;">${crit}</strong> &nbsp;|&nbsp; High: <strong style="color:#e65100;">${high}</strong></p>
+
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:8px;overflow:hidden;border:1px solid #c8eef2;margin-bottom:22px;">
+<thead><tr style="background:#000000;">
+<th style="padding:8px 10px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project Name</th>
+<th style="padding:8px 10px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Tickets</th>
+<th style="padding:8px 10px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Critical</th>
+<th style="padding:8px 10px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">High</th>
+</tr></thead>
+<tbody>${projSummary}</tbody></table>
+
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:0 0 10px 0;font-family:Calibri,Arial,sans-serif;">🛠 Detailed Under Development Report — ${today}</p>
+<div style="overflow-x:auto;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:8px;overflow:hidden;border:1px solid #c8eef2;min-width:900px;">
+<thead><tr style="background:#000000;">
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Req ID</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Priority</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Created By</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Assigned To</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Subject</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Description</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Resolution</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Developer Solution</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Status</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;white-space:nowrap;">Created Time</th>
+<th style="padding:8px 8px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;white-space:nowrap;">Modified Time</th>
+</tr></thead>
+<tbody>${detRows}</tbody>
+</table></div>
+
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:20px;"><tr>
+<td style="background:#e0f7fa;border-radius:6px;padding:10px 14px;">
+<p style="font-size:11px;font-weight:700;color:#006064;margin:0 0 4px 0;font-family:Calibri,Arial,sans-serif;">📌 Important Reminders</p>
+<p style="font-size:11px;color:#3a3a3a;margin:0;line-height:1.7;font-family:Calibri,Arial,sans-serif;">
+1. Update <strong>Developer Solution</strong> field with clear notes before changing status. &nbsp;|&nbsp;
+2. Attach screenshots/documents for complex fixes. &nbsp;|&nbsp;
+3. Update status to <strong>"Development Fixed"</strong> once fix is deployed. &nbsp;|&nbsp;
+4. Escalate <strong>Critical</strong> tickets to the project lead if not resolved within 24 hrs.
+</p>
+</td></tr></table>
+
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:26px;"><tr><td style="border-top:1px dashed #a8d8dc;font-size:0;line-height:0;height:1px;">&#8203;</td></tr></table>
+<p style="font-size:11px;color:#9ab0c5;font-style:italic;margin:12px 0 0 0;font-family:Calibri,Arial,sans-serif;">Please feel free to reach out if you have any questions or need further details.</p>`;
+
+  devHTML = wrap(body, includeSignature);
+  document.getElementById('emailPreview3').innerHTML = `<div class="email-shell">${devHTML}</div>`;
+  
+  ['copyBtn3', 'dlBtn3', 'printBtn3', 'outlookBtn3'].forEach(id => document.getElementById(id).disabled = false);
+  showToast('✅ Under Development email generated!', '#0e9aa7');
 }
 
-function getHTML(p){return p===1?ticketHTML[activePTab-1]||'':zeroHTML||'';}
-function copyHTML(p){const h=getHTML(p);if(!h)return;navigator.clipboard.writeText(h).then(()=>showToast('📋 HTML copied!','#1a6abf'));}
-function downloadHTML(p){
-  const h=getHTML(p);if(!h)return;
-  const s=p===1?'ticket-reminder':'zero-calls';
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([h],{type:'text/html'}));
-  a.download=`zoho-${s}-${new Date().toISOString().slice(0,10)}.html`;a.click();
-  showToast('⬇ Downloaded!','#2ea043');
+// Under Observation (Tab 4) - FIXED: Reduced table size, truncated description/resolution, added days difference
+function generateObsEmail() {
+  if (!obsData.length) {
+    alert('Please upload the Under Observation report first.');
+    return;
+  }
+  
+  const includeSignature = document.getElementById('signature4').checked;
+  const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  const total = obsData.length;
+  const projects = [...new Set(obsData.map(r => r.project))];
+  const crit = obsData.filter(r => (r.priority || '').toLowerCase() === 'critical').length;
+  const high = obsData.filter(r => (r.priority || '').toLowerCase() === 'high').length;
+  
+  // Smaller project summary table with reduced padding and font size
+  const projSummary = projects.map(p => {
+    const pts = obsData.filter(r => r.project === p);
+    const c = pts.filter(r => (r.priority || '').toLowerCase() === 'critical').length;
+    const h = pts.filter(r => (r.priority || '').toLowerCase() === 'high').length;
+    return `<tr>
+<td style="padding:5px 8px;font-size:11px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #e8d8f8;">${p}</td>
+<td style="padding:5px 8px;text-align:center;font-size:11px;font-weight:700;color:#0a1628;font-family:Arial,sans-serif;border-bottom:1px solid #e8d8f8;">${pts.length}</td>
+<td style="padding:5px 8px;text-align:center;border-bottom:1px solid #e8d8f8;">${c ? `<span style="background:#ffeaea;color:#b71c1c;font-weight:700;padding:2px 6px;border-radius:8px;font-size:9px;">${c} Critical</span>` : '<span style="color:#bbb;font-size:10px;">—</span>'}</td>
+<td style="padding:5px 8px;text-align:center;border-bottom:1px solid #e8d8f8;">${h ? `<span style="background:#fff3e0;color:#e65100;font-weight:700;padding:2px 6px;border-radius:8px;font-size:9px;">${h} High</span>` : '<span style="color:#bbb;font-size:10px;">—</span>'}</td>
+</tr>`;
+  }).join('');
+  
+  // Main detail rows — with truncated description/resolution and days difference from modified date
+  const detRows = obsData.map((r, i) => {
+    const pc = prioC(r.priority);
+    const hasSolution = r.devSolution && r.devSolution.trim() && r.devSolution !== '—';
+    
+    // Calculate days difference from modified date
+    const daysDiff = getDaysDifference(r.modifiedTime);
+    const daysColor = getDaysColor(daysDiff);
+    
+    // Truncate description and resolution to 2-3 lines
+    const truncatedDesc = truncateToLines(r.desc, 3);
+    const truncatedResolution = truncateToLines(r.resolution, 3);
+    
+    return `<tr style="background-color:${i % 2 === 0 ? '#fff' : '#fdf8ff'};">
+<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#7b2d8b;font-weight:700;border-bottom:1px solid #e8d8f8;white-space:nowrap;">#${r.id || '—'}</td>
+<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #e8d8f8;">${r.project}</td>
+<td style="padding:6px 8px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:${pc.bg};color:${pc.c};font-weight:700;padding:2px 6px;border-radius:8px;font-size:9px;">${r.priority || '—'}</span></td>
+<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${trunc(r.createdBy, 20) || '—'}</td>
+<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${trunc(r.assignee, 20) || '—'}</td>
+<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#1a2a3a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:150px;">${trunc(r.subject, 40) || '—'}</td>
+<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#5a6a7a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:120px;">${truncatedDesc}</td>
+<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#5a6a7a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:120px;">${truncatedResolution}</td>
+<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:120px;">
+  ${hasSolution ? `<span style="color:#6c3483;font-weight:600;">${trunc(r.devSolution, 50)}</span>` : '<span style="color:#bbb;">—</span>'}
+</td>
+<td style="padding:6px 8px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:#f3e8ff;color:#6c3483;font-weight:700;padding:2px 6px;border-radius:8px;font-size:9px;white-space:nowrap;">${r.status || 'Under Observation'}</span></td>
+<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#6b7a8d;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${r.createdTime || '—'}</td>
+<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#6b7a8d;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${r.modifiedTime || '—'}</td>
+<td style="padding:6px 8px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:${daysColor.bg};color:${daysColor.c};font-weight:700;padding:2px 6px;border-radius:8px;font-size:9px;white-space:nowrap;">${daysDiff !== null ? daysDiff + 'd' : '—'}</span></td>
+</tr>`;
+  }).join('');
+  
+  const body = `
+<p style="font-size:13px;font-weight:bold;color:#0a1628;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Dear Team,</p>
+<p style="font-size:13px;line-height:1.85;color:#2c3e50;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Please find below the detailed follow-up report for all tickets currently under <strong style="color:#7b2d8b;">"Under Observation"</strong> status. These tickets have been resolved by the development team and are now awaiting client / QA verification for final closure. Kindly review and take necessary action at the earliest.</p>
+
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:10px;"><tr>
+<td style="background:#f3e8ff;border-left:4px solid #7b2d8b;border-radius:0 6px 6px 0;padding:10px 14px;">
+<p style="font-size:12px;font-weight:700;color:#7b2d8b;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">🔵 Under Observation — Action Required</p>
+<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">All tickets listed below have been fixed by the development team and placed under <strong>client / QA observation</strong>. If the fix is verified and accepted, kindly <strong>close the ticket in Zoho Desk</strong>. If issues persist or are not yet verified, please update the status and add remarks accordingly.</p>
+</td></tr></table>
+
+${crit > 0 ? `<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:18px;margin-top:8px;"><tr>
+<td style="background:#fff0f0;border-left:4px solid #c0392b;border-radius:0 6px 6px 0;padding:10px 14px;">
+<p style="font-size:12px;font-weight:700;color:#c0392b;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">⚠ Critical Priority — ${crit} ticket${crit > 1 ? 's' : ''} require immediate client confirmation</p>
+<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">There ${crit > 1 ? 'are' : 'is'} <strong>${crit} Critical priority ticket${crit > 1 ? 's' : ''}</strong> under observation. Please follow up with the client / QA team urgently and ensure these are either closed or escalated immediately.</p>
+</td></tr></table>` : ''}
+
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:20px 0 8px 0;font-family:Calibri,Arial,sans-serif;">📋 Project-wise Summary</p>
+<p style="font-size:11px;color:#6b7a8d;margin:0 0 10px 0;font-family:Calibri,Arial,sans-serif;">Report Date: <strong style="color:#0a1628;">${today}</strong> &nbsp;|&nbsp; Total Under Observation: <strong style="color:#7b2d8b;">${total} tickets</strong> &nbsp;|&nbsp; Projects: <strong style="color:#0a1628;">${projects.length}</strong> &nbsp;|&nbsp; Critical: <strong style="color:#c0392b;">${crit}</strong> &nbsp;|&nbsp; High: <strong style="color:#e65100;">${high}</strong></p>
+
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="50%" style="border-radius:6px;overflow:hidden;border:1px solid #e0d0f0;margin-bottom:22px;">
+<thead><tr style="background:#000000;">
+<th style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project Name</th>
+<th style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Tickets</th>
+<th style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Critical</th>
+<th style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">High</th>
+</tr></thead>
+<tbody>${projSummary}</tbody></table>
+
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:0 0 10px 0;font-family:Calibri,Arial,sans-serif;">🔵 Detailed Under Observation Report — ${today}</p>
+<div style="overflow-x:auto;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:6px;overflow:hidden;border:1px solid #e0d0f0;min-width:1100px;">
+<thead><tr style="background:#000000;">
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Ticket ID</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Priority</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Created By</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Assigned To</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Subject</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Description</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Resolution</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Dev Solution</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Status</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;white-space:nowrap;">Created</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;white-space:nowrap;">Modified</th>
+<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;white-space:nowrap;">Days</th>
+</tr></thead>
+<tbody>${detRows}</tbody>
+</table></div>
+
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:20px;"><tr>
+<td style="background:#f3e8ff;border-radius:6px;padding:10px 14px;">
+<p style="font-size:11px;font-weight:700;color:#6c3483;margin:0 0 4px 0;font-family:Calibri,Arial,sans-serif;">📌 Important Reminders for Observation Closure</p>
+<p style="font-size:11px;color:#3a3a3a;margin:0;line-height:1.7;font-family:Calibri,Arial,sans-serif;">
+1. Verify the <strong>Developer Solution</strong> is clearly documented before seeking client sign-off. &nbsp;|&nbsp;
+2. Follow up with the client / QA team if no response within 2 working days. &nbsp;|&nbsp;
+3. Once client confirms, <strong>close the ticket in Zoho Desk</strong> immediately. &nbsp;|&nbsp;
+4. If the client raises new issues, reopen with updated remarks and escalate to the developer.
+</p>
+</td></tr></table>
+
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:26px;"><tr><td style="border-top:1px dashed #c8a8e8;font-size:0;line-height:0;height:1px;">&#8203;</td></tr></table>
+<p style="font-size:11px;color:#9ab0c5;font-style:italic;margin:12px 0 0 0;font-family:Calibri,Arial,sans-serif;">Please feel free to reach out if you have any questions or need further details.</p>`;
+
+  obsHTML = wrap(body, includeSignature);
+  document.getElementById('emailPreview4').innerHTML = `<div class="email-shell">${obsHTML}</div>`;
+  
+  ['copyBtn4', 'dlBtn4', 'printBtn4', 'outlookBtn4'].forEach(id => document.getElementById(id).disabled = false);
+  showToast('✅ Observation follow-up email generated!', '#9b59b6');
 }
-function printEmail(p){const h=getHTML(p);if(!h)return;const w=window.open('','_blank');w.document.write(h);w.document.close();w.focus();setTimeout(()=>w.print(),500);}
-function openInBrowser(p){document.getElementById('outlookTip'+p).classList.toggle('show');}
-function openInBrowserNow(p){
-  const h=getHTML(p);if(!h)return;
-  window.open(URL.createObjectURL(new Blob([h],{type:'text/html'})),'_blank');
-  showToast('✅ Opened! Ctrl+A → Ctrl+C → paste into Outlook.','#ff9f7f');
+
+// ============================================
+// SHARE FUNCTIONS
+// ============================================
+
+function getHTML(p) {
+  if (p === 1) return ticketHTML[activePTab - 1] || '';
+  if (p === 2) return zeroHTML || '';
+  if (p === 3) return devHTML || '';
+  if (p === 4) return obsHTML || '';
+  return '';
 }
-function showToast(msg,color){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.style.background=color||'#2ea043';
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
+
+function copyHTML(p) {
+  const h = getHTML(p);
+  if (!h) return;
+  navigator.clipboard.writeText(h).then(() => showToast('📋 HTML copied!', '#1a6abf'));
 }
+
+function downloadHTML(p) {
+  const h = getHTML(p);
+  if (!h) return;
+  const names = { 1: 'ticket-reminder', 2: 'zero-calls', 3: 'under-development', 4: 'observation-followup' };
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([h], { type: 'text/html' }));
+  a.download = `zoho-${names[p] || 'email'}-${new Date().toISOString().slice(0, 10)}.html`;
+  a.click();
+  showToast('⬇ Downloaded!', '#2ea043');
+}
+
+function printEmail(p) {
+  const h = getHTML(p);
+  if (!h) return;
+  const w = window.open('', '_blank');
+  w.document.write(h);
+  w.document.close();
+  w.focus();
+  setTimeout(() => w.print(), 500);
+}
+
+function openInBrowser(p) {
+  document.getElementById('outlookTip' + p).classList.toggle('show');
+}
+
+function openInBrowserNow(p) {
+  const h = getHTML(p);
+  if (!h) return;
+  window.open(URL.createObjectURL(new Blob([h], { type: 'text/html' })), '_blank');
+  showToast('✅ Opened! Ctrl+A → Ctrl+C → paste into Outlook.', '#ff9f7f');
+}
+
+function showToast(msg, color) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = color || '#2ea043';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ============================================
+// FILE UPLOAD SETUP
+// ============================================
+
+setupUpload('zone1', 'file1', 'status1', raw => { summaryData = parseSummary(raw); renderTicketSidebar(); document.getElementById('dataPanel1').style.display = 'block'; });
+setupUpload('zone2', 'file2', 'status2', raw => { detailData = parseDetail(raw); renderTicketSidebar(); document.getElementById('dataPanel1').style.display = 'block'; });
+setupUpload('zone3', 'file3', 'status3', raw => { zeroData = parseZero(raw); renderZeroSidebar(); document.getElementById('dataPanel2').style.display = 'block'; });
+setupUpload('zone4', 'file4', 'status4', raw => { devData = parseDev(raw); renderDevSidebar(); document.getElementById('dataPanel3').style.display = 'block'; });
+setupUpload('zone5', 'file5', 'status5', raw => { obsData = parseObs(raw); renderObsSidebar(); document.getElementById('dataPanel4').style.display = 'block'; });
+
 </script>
 </body>
-
 </html>
