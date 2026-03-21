@@ -171,6 +171,8 @@ tr:hover td{background:var(--faint)}
 .bill-card-amount{font-family:'DM Mono',monospace;font-weight:700;color:var(--accent);font-size:.95rem}
 /* Items stacked */
 .items-stack{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+/* Empty item hint */
+.item-row-pending{border-color:rgba(79,142,247,.3);border-style:dashed}
 </style>
 </head>
 <body>
@@ -204,7 +206,6 @@ tr:hover td{background:var(--faint)}
       <div class="field"><label>Bill No.</label><input type="text" id="billNo" readonly></div>
       <div class="field"><label>Date</label><input type="date" id="billDate"></div>
     </div>
-    <!-- Customer autocomplete -->
     <div class="field">
       <label>Customer Name *</label>
       <input type="text" id="custName" placeholder="Enter customer name" autocomplete="off">
@@ -219,7 +220,6 @@ tr:hover td{background:var(--faint)}
       <div class="field"><label>GSTIN</label><input type="text" id="custGstin" placeholder="GST No. (optional)"></div>
       <div class="field"><label>Place / City</label><input type="text" id="custPlace" placeholder="City"></div>
     </div>
-    <!-- Credit banner -->
     <div class="credit-banner" id="creditBanner" style="display:none">
       <div class="cb-title"><i class="fas fa-exclamation-triangle"></i> Previous Credit Pending</div>
       <div class="cb-row"><span>Previous Credit:</span><span id="cbPrevCredit" style="color:var(--red)"></span></div>
@@ -230,13 +230,10 @@ tr:hover td{background:var(--faint)}
 
   <div class="section-title" style="margin-bottom:10px"><i class="fas fa-list"></i> Items</div>
   <div class="items-stack" id="itemsContainer"></div>
-  <!-- Add item divider shown after items -->
-  <div class="add-item-divider" id="addItemDivider" style="display:none">
-    <button class="add-item-btn-inline" id="addItemRowBtn"><i class="fas fa-plus"></i> Add Another Item</button>
-  </div>
-  <!-- Initial add button when no items -->
-  <div id="addItemInitWrap" style="margin-bottom:12px">
-    <button class="btn btn-outline btn-full" id="addItemInitBtn"><i class="fas fa-plus"></i> Add Item</button>
+
+  <!-- Add item button — always visible below items -->
+  <div style="margin-bottom:12px" id="addItemWrap">
+    <button class="btn btn-outline btn-full" id="addItemBtn"><i class="fas fa-plus"></i> Add Item</button>
   </div>
 
   <div class="total-block">
@@ -469,8 +466,8 @@ let settings=DB.get('mss_settings')||{
   enableGst:true,enableDiscount:true,prefix:'MSS-',currency:'Rs.',gsEndpoint:''
 };
 
-let billItems=[{id:uid(),itemId:'',qty:1,price:0,discount:0,gst:0,unit:'',name:'',hsn:''}];
-let editingBillId=null; // null = new bill, else = editing bill id
+let billItems=[];
+let editingBillId=null;
 let currentTheme=DB.get('mss_theme')||'dark';
 
 function uid(){return Date.now()+Math.floor(Math.random()*9999)}
@@ -622,7 +619,6 @@ function updateCreditBanner(){
   if(mobile){
     credit=getCustomerCredit(mobile);
   } else if(name){
-    // try by name
     const c=customers.find(x=>x.name.toLowerCase()===name.toLowerCase());
     if(c&&c.mobile) credit=getCustomerCredit(c.mobile);
   }
@@ -651,14 +647,14 @@ function updateCreditBanner(){
 }
 
 // ═══════════════════════════════════════════════════════════════
-// BILLING
+// BILLING — FIXED renderBillItems
 // ═══════════════════════════════════════════════════════════════
 function initBilling(isNew=true){
   if(isNew){
     editingBillId=null;
     document.getElementById('billDate').value=new Date().toISOString().slice(0,10);
     document.getElementById('billNo').value=genBillNo();
-    billItems=[{id:uid(),itemId:'',qty:1,price:0,discount:0,gst:0,unit:'',name:'',hsn:''}];
+    billItems=[];  // start empty — user clicks Add Item to begin
     ['custName','custMobile','custGstin','custPlace'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('amountPaid').value='0';
     document.getElementById('paymentMethod').value='cash';
@@ -676,24 +672,17 @@ function genBillNo(){
   return prefix+String(maxNum+1).padStart(4,'0');
 }
 
+// ─── THE MAIN FIX: always render all rows, including blank ones ───
 function renderBillItems(){
   const c=document.getElementById('itemsContainer');
   const gstOn=settings.enableGst!==false;
   const discOn=settings.enableDiscount!==false;
-  const initWrap=document.getElementById('addItemInitWrap');
-  const divider=document.getElementById('addItemDivider');
 
-  if(!billItems.length||!billItems[0].itemId){
-    // show initial add button
+  if(!billItems.length){
     c.innerHTML='';
-    initWrap.style.display='';
-    divider.style.display='none';
     calcBillTotals();
     return;
   }
-
-  initWrap.style.display='none';
-  divider.style.display='';
 
   c.innerHTML=billItems.map((bi,idx)=>{
     const amt=bi.qty*bi.price;
@@ -702,10 +691,11 @@ function renderBillItems(){
     const gstAmt=gstOn?taxable*(bi.gst/100):0;
     const lineTotal=taxable+gstAmt;
     const opts=items.map(it=>`<option value="${it.id}"${bi.itemId==it.id?' selected':''}>${it.name}</option>`).join('');
-    return `<div class="item-row" data-idx="${idx}">
+    const isPending=!bi.itemId;
+    return `<div class="item-row${isPending?' item-row-pending':''}" data-idx="${idx}">
       <div class="item-row-header">
         <span class="badge badge-blue">#${idx+1}</span>
-        <span class="item-row-name">${bi.name||'Select item below'}</span>
+        <span class="item-row-name">${bi.name||'Select item below ↓'}</span>
         <span class="item-row-amount">${cur()}${lineTotal.toFixed(2)}</span>
         <button class="btn btn-icon btn-danger btn-sm" onclick="removeBillItem(${idx})"><i class="fas fa-trash"></i></button>
       </div>
@@ -748,11 +738,6 @@ window.selectBillItem=(idx,id)=>{
 
 window.removeBillItem=idx=>{
   billItems.splice(idx,1);
-  if(!billItems.length){
-    document.getElementById('addItemInitWrap').style.display='';
-    document.getElementById('addItemDivider').style.display='none';
-    document.getElementById('itemsContainer').innerHTML='';
-  }
   renderBillItems();
   calcBillTotals();
 };
@@ -775,7 +760,6 @@ window.updateBillItem=(idx,field,val)=>{
 
 function addNewItemRow(){
   billItems.push({id:uid(),itemId:'',qty:1,price:0,discount:0,gst:0,unit:'',name:'',hsn:''});
-  // Don't re-render all — just append a blank item
   renderBillItems();
   setTimeout(()=>{
     const rows=document.querySelectorAll('.item-row');
@@ -783,8 +767,7 @@ function addNewItemRow(){
   },120);
 }
 
-document.getElementById('addItemRowBtn').addEventListener('click',addNewItemRow);
-document.getElementById('addItemInitBtn').addEventListener('click',addNewItemRow);
+document.getElementById('addItemBtn').addEventListener('click',addNewItemRow);
 
 function calcBillTotals(){
   const gstOn=settings.enableGst!==false, discOn=settings.enableDiscount!==false;
@@ -847,7 +830,6 @@ function updatePaymentCalc(){
   const effective=prevCredit>0?totalPayable:grand;
 
   if(method==='credit'){
-    // Full credit - no payment needed
     document.getElementById('balLabel').textContent='Total Credit';
     document.getElementById('balAmount').textContent=fmt(grand);
     document.getElementById('balAmount').className='bv negative';
@@ -888,9 +870,7 @@ function calcBillTotalsQuiet(){
 document.getElementById('amountPaid').addEventListener('input',updatePaymentCalc);
 document.getElementById('paymentMethod').addEventListener('change',()=>{
   const method=document.getElementById('paymentMethod').value;
-  if(method==='credit'){
-    document.getElementById('amountPaid').value='0';
-  }
+  if(method==='credit') document.getElementById('amountPaid').value='0';
   updatePaymentCalc();
 });
 
@@ -968,14 +948,12 @@ function buildBillData(){
 }
 
 function resetBilling(){
-  billItems=[{id:uid(),itemId:'',qty:1,price:0,discount:0,gst:0,unit:'',name:'',hsn:''}];
+  billItems=[];
   ['custName','custMobile','custGstin','custPlace'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('billNo').value=genBillNo();
   document.getElementById('amountPaid').value='0';
   document.getElementById('paymentMethod').value='cash';
   document.getElementById('creditBanner').style.display='none';
-  document.getElementById('addItemInitWrap').style.display='';
-  document.getElementById('addItemDivider').style.display='none';
   document.getElementById('itemsContainer').innerHTML='';
   editingBillId=null;
   calcBillTotals();
@@ -1051,9 +1029,7 @@ window.loadBillForEdit=id=>{
     const found=items.find(i=>i.name===it.name);
     return {id:uid(),itemId:found?found.id:'',qty:it.qty,price:it.price,discount:it.discount||0,gst:it.gst||0,unit:it.uom||'',name:it.name,hsn:it.hsn||''};
   });
-  if(!billItems.length) billItems=[{id:uid(),itemId:'',qty:1,price:0,discount:0,gst:0,unit:'',name:'',hsn:''}];
 
-  // Switch to billing page
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelector('[data-page="pageBilling"]').classList.add('active');
@@ -1198,7 +1174,6 @@ function generatePDF(bill){
   });
   y=doc.lastAutoTable.finalY+5;
 
-  // Totals
   const TW=76, TX=PW-MR-TW;
   const totRows=[];
   totRows.push(['Sub Total', R(bill.sub)]);
@@ -1222,7 +1197,6 @@ function generatePDF(bill){
   });
   y=doc.lastAutoTable.finalY+5;
 
-  // Payment details block
   const payRows=[];
   if(bill.prevCredit>0) payRows.push(['Previous Credit (Pending)', R(bill.prevCredit)]);
   if(bill.prevCredit>0) payRows.push(['Total Payable', R(bill.totalPayable)]);
@@ -1250,12 +1224,10 @@ function generatePDF(bill){
   });
   y=doc.lastAutoTable.finalY+4;
 
-  // Amount in words
   doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(70,80,120);
   doc.text('Amount in Words: '+numToWords(Math.round(bill.grand))+' Rupees Only', ML, y);
   y+=8;
 
-  // Bank + Declaration
   doc.setFillColor(245,248,255);
   doc.setDrawColor(210,218,240); doc.setLineWidth(0.2);
   const bh=21;
